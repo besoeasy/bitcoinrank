@@ -44,11 +44,11 @@ const getBalance = async () => {
 
 		balance.value = exp1.data[address.value].address.balance;
 
-		const exp2 = await axiosCall(`https://api.blockchair.com/bitcoin/addresses?a=count()&q=balance(` + balance.value + `..34859739823342)`);
+		const exp2 = await axiosCall(`https://api.blockchair.com/bitcoin/addresses?a=count()&q=balance(${balance.value}..34859739823342)`);
 
 		rank.value = exp2.data[0]["count()"] || 0;
 
-		const exp3 = await axiosCall(`https://api.blockchair.com/bitcoin/addresses?q=balance(` + (balance.value + 1) + `..34859739823342)&limit=5&s=balance(asc)`);
+		const exp3 = await axiosCall(`https://api.blockchair.com/bitcoin/addresses?q=balance(${balance.value + 1}..34859739823342)&limit=5&s=balance(asc)`);
 
 		bossman.value = exp3.data[0].address;
 	}

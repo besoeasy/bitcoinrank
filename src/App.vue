@@ -1,17 +1,27 @@
 <template>
-	<header></header>
+		<section class="pt-24 pb-28 bg-white overflow-hidden">
+			<div class="container px-4 mx-auto">
+				<div class="text-center max-w-lg mx-auto">
+					<h2 v-if="rank !== null" class="mb-5 text-6xl md:text-7xl font-bold font-heading text-center tracking-px-n leading-tight">Rank: {{ rank }}</h2>
 
-	<main>
-		<div class="wrapper">
-			<input class="border p-2 rounded" v-model="address" placeholder="Enter Bitcoin address" />
-			<button class="bg-blue-500 text-white p-2 rounded" @click="getBalance">Check Balance</button>
-			<p v-if="balance !== null">Balance: {{ balance / 10 ** 8 }}</p>
+					<p class="mb-7 text-lg text-gray-600 font-medium" v-if="balance !== null">Balance: {{ balance / 10 ** 8 }}</p>
 
-			<p v-if="rank !== null">Rank: {{ rank }}</p>
+					<input class="py-4 px-6 w-full my-10" v-model="address" placeholder="Enter Bitcoin address" />
 
-			<p v-if="bossman !== null">Bossman: {{ bossman }}</p>
-		</div>
-	</main>
+					<div class="mb-11 md:inline-block">
+						<button
+							@click="getBalance"
+							class="py-4 px-6 w-full text-white font-semibold border border-indigo-700 rounded-xl shadow-4xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200"
+							type="button"
+						>
+							Get Rank
+						</button>
+					</div>
+
+					<p class="mb-7 text-lg text-gray-600 font-medium" v-if="bossman !== null">Bossman: {{ bossman }}</p>
+				</div>
+			</div>
+		</section>
 </template>
 
 <script setup>

@@ -9,7 +9,7 @@
 
 			<p v-if="rank !== null">Rank: {{ rank }}</p>
 
-      <p v-if="bossman !== null">Bossman: {{ bossman }}</p>
+			<p v-if="bossman !== null">Bossman: {{ bossman }}</p>
 		</div>
 	</main>
 </template>
@@ -24,12 +24,16 @@ let rank = ref(null);
 let bossman = ref(null);
 
 async function axiosCall(url) {
-
-  console.log(url);
+	console.log(url);
 
 	const response = await axios.get(url);
 
 	console.log(response.data);
+
+	if (response.data.status === 430) {
+		console.log("430 error");
+		return;
+	}
 
 	return response.data;
 }
@@ -46,7 +50,7 @@ const getBalance = async () => {
 
 		const exp3 = await axiosCall(`https://api.blockchair.com/bitcoin/addresses?q=balance(` + (balance.value + 1) + `..34859739823342)&limit=5&s=balance(asc)`);
 
-    bossman.value = exp3.data[0].address;
-  }
+		bossman.value = exp3.data[0].address;
+	}
 };
 </script>

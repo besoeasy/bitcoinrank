@@ -2,6 +2,9 @@
 	<div class="m-auto container">
 		<div class="flex min-h-screen">
 			<div class="w-1/3 m-auto p-10" @mouseenter="getbitcoinPrice()">
+				<img :src="`https://robohash.org/` + address + `.png?set=set2&size=500x500`" />
+				<div class="my-5"></div>
+
 				<input
 					class="p-4 w-full bg-orange-300 hover:bg-orange-400 rounded-lg text-center text-gray-800"
 					v-model="address"

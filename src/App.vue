@@ -2,7 +2,7 @@
 	<section class="pt-24 pb-28 bg-white overflow-hidden">
 		<div class="container px-4 mx-auto">
 			<div class="text-center max-w-lg mx-auto">
-				<h2 v-if="rank !== null" class="mb-5 text-6xl md:text-7xl font-bold font-heading text-center tracking-px-n leading-tight">Rank: {{ rank }}</h2>
+				<h2 v-if="rank !== null" class="mb-5 text-6xl md:text-7xl font-bold font-heading text-center tracking-px-n leading-tight">Old Rank: {{ oldrank }} - New Rank: {{ rank }}</h2>
 
 				<p class="mb-7 text-lg text-gray-600 font-medium" v-if="balance !== null">Balance: {{ balance / 10 ** 8 }} BTC</p>
 
@@ -67,10 +67,7 @@ async function getBitcoinBalance(address) {
 
 const getBalance = async () => {
 	if (address.value) {
-
-
 		localStorage.setItem("address", address.value);
-
 
 		balance.value = await getBitcoinBalance(address.value);
 
@@ -78,7 +75,7 @@ const getBalance = async () => {
 
 		rank.value = exp2.data[0]["count()"] || 0;
 
-	localStorage.setItem("oldrank", rank.value);
+		localStorage.setItem("oldrank", rank.value);
 
 		const exp3 = await axiosCall(`https://api.blockchair.com/bitcoin/addresses?q=balance(${balance.value + 1}..34859739823342)&limit=5&s=balance(asc)`);
 

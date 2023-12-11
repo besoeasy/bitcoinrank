@@ -1,56 +1,48 @@
 <template>
-	<div>
-		<div class="flex flex-center">
-			<div class="w-1/2">XX</div>
-			<div class="w-1/2">YY</div>
-		</div>
-	</div>
+	<div class="m-auto container">
+		<div class="flex min-h-screen">
+			<div class="w-1/3 m-auto p-10" @mouseenter="getbitcoinPrice()">
+				<input
+					class="p-4 w-full bg-orange-300 hover:bg-orange-400 rounded-lg text-center text-gray-800"
+					v-model="address"
+					placeholder="Enter Bitcoin address"
+				/>
 
-	<section class="pt-24 pb-28 bg-white overflow-hidden">
-		<div class="container px-4 mx-auto">
-			<div class="text-center max-w-lg mx-auto">
-				<h2
-					v-if="rank !== null"
-					class="mb-5 text-6xl md:text-7xl font-bold font-heading text-center tracking-px-n leading-tight"
-				>
-					Old Rank: {{ oldrank }} - New Rank: {{ rank }}
-				</h2>
+				<div class="my-5"></div>
 
-				<p class="mb-7 text-lg text-gray-600 font-medium" v-if="balance !== null">
-					Balance: {{ balance / 10 ** 8 }} BTC
-				</p>
-
-				<p class="mb-7 text-lg text-gray-600 font-medium" v-if="balance !== null">
-					Balance: {{ (balance / 10 ** 8) * bitcoinPrice }} USD
-				</p>
-
-				<input class="py-4 px-6 w-full my-10" v-model="address" placeholder="Enter Bitcoin address" />
-
-				<div class="mb-11 md:inline-block">
-					<button
-						@click="getBalance"
-						class="py-4 px-6 w-full text-white font-semibold border border-indigo-700 rounded-xl shadow-4xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200"
-						type="button"
+				<button class="w-full bg-orange-300 px-4 py-3 rounded-lg text-bold hover:bg-orange-400" @click="getBalance">
+					FETCH
+				</button>
+			</div>
+			<div class="w-2/3 m-auto p-10">
+				<div class="text-center max-w-lg mx-auto">
+					<h2
+						v-if="rank !== null"
+						class="mb-5 text-6xl md:text-7xl font-bold font-heading text-center tracking-px-n leading-tight"
 					>
-						Get Rank
-					</button>
+						Old Rank: {{ oldrank }} - New Rank: {{ rank }}
+					</h2>
+
+					<p class="mb-7 text-lg text-gray-600 font-medium" v-if="balance !== null">
+						Balance: {{ balance / 10 ** 8 }} BTC
+					</p>
+
+					<p class="mb-7 text-lg text-gray-600 font-medium" v-if="balance !== null">
+						Balance: {{ (balance / 10 ** 8) * bitcoinPrice }} USD
+					</p>
+
+					<p class="mb-7 text-lg text-gray-600 font-medium" v-if="bossman !== null">
+						Bossman: {{ bossman }} - Boss Balance {{ bossmanBal / 10 ** 8 }} BTC - Bossman By
+						{{ (bossmanBal - balance) / 10 ** 8 }} BTC
+					</p>
+
+					<p class="mb-7 text-lg text-gray-600 font-medium" v-if="bitcoinPrice !== null">
+						Bitcoin Price: {{ bitcoinPrice }}
+					</p>
 				</div>
-
-				<p class="mb-7 text-lg text-gray-600 font-medium" v-if="bossman !== null">
-					Bossman: {{ bossman }} - Boss Balance {{ bossmanBal / 10 ** 8 }} BTC - Bossman By
-					{{ (bossmanBal - balance) / 10 ** 8 }} BTC
-				</p>
-
-				<p
-					class="mb-7 text-lg text-gray-600 font-medium"
-					v-if="bitcoinPrice !== null"
-					@mouseenter="getbitcoinPrice()"
-				>
-					Bitcoin Price: {{ bitcoinPrice }}
-				</p>
 			</div>
 		</div>
-	</section>
+	</div>
 </template>
 
 <script setup>

@@ -35,9 +35,11 @@ let address = ref("");
 let rank = ref(null);
 let bossman = ref(null);
 let bossmanBal = ref(null);
+let oldrank = ref(null);
 
 if (localStorage.getItem("address")) {
 	address.value = localStorage.getItem("address");
+	oldrank.value = localStorage.getItem("oldrank");
 }
 
 async function axiosCall(url) {
@@ -69,12 +71,14 @@ const getBalance = async () => {
 
 		localStorage.setItem("address", address.value);
 
-		
+
 		balance.value = await getBitcoinBalance(address.value);
 
 		const exp2 = await axiosCall(`https://api.blockchair.com/bitcoin/addresses?a=count()&q=balance(${balance.value}..34859739823342)`);
 
 		rank.value = exp2.data[0]["count()"] || 0;
+
+	localStorage.setItem("oldrank", rank.value);
 
 		const exp3 = await axiosCall(`https://api.blockchair.com/bitcoin/addresses?q=balance(${balance.value + 1}..34859739823342)&limit=5&s=balance(asc)`);
 

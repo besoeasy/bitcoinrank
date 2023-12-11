@@ -23,7 +23,7 @@
 						v-if="rank !== null"
 						class="mb-5 text-6xl md:text-7xl font-bold font-heading text-center tracking-px-n leading-tight"
 					>
-						Old Rank: {{ oldrank }} - New Rank: {{ rank }}
+						Your Rank: {{ rank }}
 					</h2>
 
 					<p class="mb-7 text-lg text-gray-600 font-medium" v-if="balance !== null">
@@ -57,14 +57,12 @@
 	let rank = ref(null);
 	let bossman = ref(null);
 	let bossmanBal = ref(null);
-	let oldrank = ref(null);
 	let bitcoinPrice = ref(null);
 
 	getbitcoinPrice();
 
 	if (localStorage.getItem('address')) {
 		address.value = localStorage.getItem('address');
-		oldrank.value = localStorage.getItem('oldrank');
 	}
 
 	async function axiosCall(url) {
@@ -107,8 +105,6 @@
 			);
 
 			rank.value = exp2.data[0]['count()'] || 0;
-
-			localStorage.setItem('oldrank', rank.value);
 
 			const exp3 = await axiosCall(
 				`https://api.blockchair.com/bitcoin/addresses?q=balance(${

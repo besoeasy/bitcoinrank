@@ -2,16 +2,9 @@
 	<section class="pt-24 pb-28 bg-white overflow-hidden">
 		<div class="container px-4 mx-auto">
 			<div class="text-center max-w-lg mx-auto">
-				<h2
-					v-if="rank !== null"
-					class="mb-5 text-6xl md:text-7xl font-bold font-heading text-center tracking-px-n leading-tight"
-				>
-					Rank: {{ rank }}
-				</h2>
+				<h2 v-if="rank !== null" class="mb-5 text-6xl md:text-7xl font-bold font-heading text-center tracking-px-n leading-tight">Rank: {{ rank }}</h2>
 
-				<p class="mb-7 text-lg text-gray-600 font-medium" v-if="balance !== null">
-					Balance: {{ balance / 10 ** 8 }} BTC
-				</p>
+				<p class="mb-7 text-lg text-gray-600 font-medium" v-if="balance !== null">Balance: {{ balance / 10 ** 8 }} BTC</p>
 
 				<input class="py-4 px-6 w-full my-10" v-model="address" placeholder="Enter Bitcoin address" />
 
@@ -26,8 +19,7 @@
 				</div>
 
 				<p class="mb-7 text-lg text-gray-600 font-medium" v-if="bossman !== null">
-					Bossman: {{ bossman }} - Boss Balance {{ bossmanBal / 10 ** 8 }} BTC - Bossman By
-					{{ (bossmanBal - balance) / 10 ** 8 }} BTC
+					Bossman: {{ bossman }} - Boss Balance {{ bossmanBal / 10 ** 8 }} BTC - Bossman By {{ (bossmanBal - balance) / 10 ** 8 }} BTC
 				</p>
 			</div>
 		</div>
@@ -35,53 +27,51 @@
 </template>
 
 <script setup>
-	import { ref } from 'vue';
-	import axios from 'axios';
+import { ref } from "vue";
+import axios from "axios";
 
-	let balance = ref(null);
-	let address = ref('');
-	let rank = ref(null);
-	let bossman = ref(null);
-	let bossmanBal = ref(null);
+let balance = ref(null);
+let address = ref("");
+let rank = ref(null);
+let bossman = ref(null);
+let bossmanBal = ref(null);
 
-	async function axiosCall(url) {
-		console.log(url);
+async function axiosCall(url) {
+	console.log(url);
 
-		const response = await axios.get(url);
+	const response = await axios.get(url);
 
-		console.log(response.data);
+	console.log(response.data);
 
-		if (response.data.status === 430) {
-			console.log('430 error');
-			return;
-		}
-
-		return response.data;
+	if (response.data.status === 430) {
+		console.log("430 error");
+		return;
 	}
 
-	const getBalance = async () => {
-		if (address.value) {
-			const exp1 = await axiosCall(`https://api.blockchair.com/bitcoin/dashboards/address/${address.value}`);
+	return response.data;
+}
 
-			balance.value = exp1.data[address.value].address.balance;
+async function getBitcoinBalance(address) {
+	const data = await axiosCall(`https://api.blockcypher.com/v1/btc/main/addrs/${address}/balance`);
 
-			const exp2 = await axiosCall(
-				`https://api.blockchair.com/bitcoin/addresses?a=count()&q=balance(${balance.value}..34859739823342)`
-			);
+	console.log(data.balance);
 
-			rank.value = exp2.data[0]['count()'] || 0;
+	return data.balance;
+}
 
-			const exp3 = await axiosCall(
-				`https://api.blockchair.com/bitcoin/addresses?q=balance(${
-					balance.value + 1
-				}..34859739823342)&limit=5&s=balance(asc)`
-			);
+const getBalance = async () => {
+	if (address.value) {
+		balance.value = await getBitcoinBalance(address.value);
 
-			bossman.value = exp3.data[0].address;
+		const exp2 = await axiosCall(`https://api.blockchair.com/bitcoin/addresses?a=count()&q=balance(${balance.value}..34859739823342)`);
 
-			const exp4 = await axiosCall(`https://api.blockchair.com/bitcoin/dashboards/address/${bossman.value}`);
+		rank.value = exp2.data[0]["count()"] || 0;
 
-			bossmanBal.value = exp4.data[bossman.value].address.balance;
-		}
-	};
+		const exp3 = await axiosCall(`https://api.blockchair.com/bitcoin/addresses?q=balance(${balance.value + 1}..34859739823342)&limit=5&s=balance(asc)`);
+
+		bossman.value = exp3.data[0].address;
+
+		bossmanBal.value = await getBitcoinBalance(bossman.value);
+	}
+};
 </script>

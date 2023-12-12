@@ -1,6 +1,6 @@
 <template>
 	<div class="m-auto container">
-		<div class="flex">
+		<div class="flex min-h-full	">
 			<div class="w-1/3 m-auto p-10" v-if="bossman !== null">
 				<h2 class="text-xl md:text-3xl font-bold">
 					<div># {{ rank - 1 }}</div>

@@ -1,8 +1,8 @@
 <template>
 	<div class="my-40">
-		<div class="flex m-auto container max-w-6xl">
+		<div class="flex m-auto container">
 			<div class="w-1/2">
-				<img class="w-full transform duration-500 hover:scale-110" :src="`https://robohash.org/` + btcaddress + `.png?set=set2&size=500x500`" />
+				<img class="w-full h-full" :src="`https://robohash.org/` + btcaddress + `.png?set=set2&size=500x500`" />
 			</div>
 
 			<div class="w-1/2">
@@ -27,17 +27,18 @@
 
 					<div class="my-3"></div>
 
-					<p class="transition-opacity duration-300 mt-2 text-sm">Last Seen : {{ timeAgo(mytxs[0].date) }}</p>
+					<p class="transition-opacity duration-300 mt-2 text-sm">Last Seen : {{ lastseen }}</p>
 
 					<div class="my-3"></div>
-
-					<div id="chart"></div>
-
-					<div v-for="(tx, index) in mytxs" :key="index">
-						<p>{{ tx.balance / 10 ** 8 }} BTC</p>
-						<p>{{ timeAgo(tx.date) }}</p>
-					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="my-40">
+		<div class="flex m-auto container">
+			<div class="w-1/2">
+				<canvas id="myChart"></canvas>
 			</div>
 		</div>
 	</div>
@@ -73,6 +74,8 @@
 </template>
 
 <script setup>
+import Chart from "chart.js/auto";
+
 import { axiosCall } from "@/func.js";
 
 import { ref, onMounted } from "vue";
@@ -119,6 +122,7 @@ let mybalance = ref(0);
 let myrank = ref(0);
 let mytx = ref(0);
 let mytxs = ref([]);
+let lastseen = ref("");
 
 let bossmans = ref([]);
 let btcprice = ref(0);
@@ -132,6 +136,8 @@ const fetchData = async () => {
 		const { bal, humanbal, tx, txs } = await getBitcoinBalance(btcaddress);
 
 		if (tx > 0) {
+			lastseen.value = timeAgo(txs[0].confirmed);
+
 			for (const tx of txs) {
 				mytxs.value.push({ tx: tx.tx_hash, balance: tx.ref_balance, date: tx.confirmed });
 			}
@@ -155,6 +161,31 @@ const fetchData = async () => {
 		}
 
 		console.log(bossmans);
+
+		const ctx = document.getElementById("myChart").getContext("2d");
+
+		const myChart = new Chart(ctx, {
+			type: "line",
+			data: {
+				labels: mytxs.value.map((tx) => timeAgo(tx.date)),
+				datasets: [
+					{
+						label: "Balance",
+						data: mytxs.value.map((tx) => tx.balance / 10 ** 8),
+						backgroundColor: ["rgba(255, 99, 132, 0.2)"],
+						borderColor: ["rgba(255, 99, 132, 1)"],
+						borderWidth: 1,
+					},
+				],
+			},
+			options: {
+				scales: {
+					y: {
+						beginAtZero: true,
+					},
+				},
+			},
+		});
 	} catch (error) {
 		console.error("Error fetching data:", error);
 	}

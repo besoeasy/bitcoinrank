@@ -1,43 +1,71 @@
 <template>
 	<div class="my-40">
-		<div class="flex m-auto container">
+		<div class="flex m-auto container max-w-5xl">
 			<div class="w-1/2">
 				<img class="w-full h-full" :src="`https://robohash.org/` + btcaddress + `.png?set=set2&size=500x500`" />
 			</div>
 
 			<div class="w-1/2">
 				<div class="m-auto">
-					<p class="transition-opacity duration-300 mt-2 text-xl">Your Global Rank # {{ myrank }}</p>
-
-					<div class="my-3"></div>
-
-					<p class="transition-opacity duration-300 mt-2 text-2xl">{{ mybalance }} BTC</p>
-
-					<div class="my-3"></div>
-
-					<p class="transition-opacity duration-300 mt-2 text-2xl">{{ parseInt(mybalance * btcprice) }} USD</p>
-
-					<div class="my-3"></div>
-
 					<p class="transition-opacity duration-300 mt-2 text-sm">{{ btcaddress }}</p>
-
-					<div class="my-3"></div>
-
-					<p class="transition-opacity duration-300 mt-2 text-sm">Total Transactions: {{ mytx }}</p>
-
-					<div class="my-3"></div>
-
-					<p class="transition-opacity duration-300 mt-2 text-sm">Last Seen : {{ lastseen }}</p>
-
-					<div class="my-3"></div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="my-40">
+	<div class="my-20">
+		<div class="container px-4 m-auto">
+			<div class="flex flex-wrap -m-4">
+				<div class="w-full lg:w-1/4 p-4">
+					<div class="p-6 rounded bg-white">
+						<div class="flex mb-2">
+							<h3 class="text-sm text-gray-600">Global Rank :</h3>
+						</div>
+						<h2 class="mb-2 text-3xl font-bold"># {{ myrank }}</h2>
+					</div>
+				</div>
+				<div class="w-full lg:w-1/4 p-4">
+					<div class="p-6 rounded bg-white">
+						<div class="flex mb-2">
+							<h3 class="text-sm text-gray-600">Balance</h3>
+						</div>
+						<h2 class="mb-2 text-3xl font-bold">{{ mybalance }} BTC</h2>
+						<span class="text-green-500">
+							<span class="inline-block mr-2">
+								<svg width="18" height="10" viewbox="0 0 18 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path
+										d="M16.5 5.83333C16.3906 5.83339 16.2822 5.81188 16.181 5.77002C16.0799 5.72817 15.988 5.66678 15.9106 5.58939C15.8332 5.512 15.7719 5.42011 15.73 5.31897C15.6881 5.21784 15.6666 5.10945 15.6667 5V2.84505L10.4225 8.08916C10.3452 8.16656 10.2533 8.22796 10.1522 8.26985C10.0511 8.31175 9.94277 8.33331 9.83333 8.33331C9.7239 8.33331 9.61554 8.31175 9.51445 8.26985C9.41335 8.22796 9.3215 8.16656 9.24414 8.08916L6.50002 5.34505L2.08919 9.75583C1.93245 9.90975 1.72127 9.99555 1.50159 9.99456C1.28191 9.99356 1.07151 9.90586 0.91617 9.75052C0.760831 9.59518 0.673123 9.38478 0.672128 9.1651C0.671133 8.94542 0.756932 8.73424 0.910858 8.5775L5.91086 3.5775C5.98822 3.5001 6.08007 3.4387 6.18116 3.39681C6.28226 3.35492 6.39062 3.33335 6.50005 3.33335C6.60948 3.33335 6.71784 3.35492 6.81893 3.39681C6.92003 3.4387 7.01188 3.5001 7.08924 3.5775L9.83336 6.32161L14.4883 1.66666H12.3334C12.1123 1.66666 11.9004 1.57887 11.7441 1.42259C11.5878 1.2663 11.5 1.05434 11.5 0.833329C11.5 0.612315 11.5878 0.400352 11.7441 0.244073C11.9004 0.0877924 12.1123 -4.76837e-06 12.3334 -4.76837e-06H16.5C16.6095 -6.67572e-05 16.7179 0.0214453 16.819 0.063302C16.9201 0.105159 17.012 0.166539 17.0894 0.243935C17.1668 0.321329 17.2282 0.413218 17.2701 0.514352C17.3119 0.615484 17.3334 0.723876 17.3334 0.833329V5C17.3334 5.10945 17.3119 5.21784 17.2701 5.31897C17.2282 5.42011 17.1668 5.512 17.0894 5.58939C17.012 5.66678 16.9201 5.72817 16.819 5.77002C16.7179 5.81188 16.6095 5.83339 16.5 5.83333Z"
+										fill="#17BB84"
+									></path>
+								</svg>
+							</span>
+							<span>{{ parseInt(mybalance * btcprice) }} USD</span>
+						</span>
+					</div>
+				</div>
+				<div class="w-full lg:w-1/4 p-4">
+					<div class="p-6 rounded bg-white">
+						<div class="flex mb-2">
+							<h3 class="text-sm text-gray-600">Total Transactions :</h3>
+						</div>
+						<h2 class="mb-2 text-3xl font-bold">{{ mytx }}</h2>
+					</div>
+				</div>
+				<div class="w-full lg:w-1/4 p-4">
+					<div class="p-6 rounded bg-white">
+						<div class="flex mb-2">
+							<h3 class="text-sm text-gray-600">Last Seen :</h3>
+						</div>
+						<h2 class="mb-2 text-3xl font-bold">{{ lastseen }}</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="my-20">
 		<div class="flex m-auto container">
-			<div class="w-1/2">
+			<div class="w-2/3">
 				<canvas id="myChart"></canvas>
 			</div>
 		</div>

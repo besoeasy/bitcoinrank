@@ -20,6 +20,13 @@
 					<div class="my-3"></div>
 
 					<p class="transition-opacity duration-300 mt-2 text-sm">{{ btcaddress }}</p>
+
+					<div class="my-3"></div>
+
+					<p class="transition-opacity duration-300 mt-2 text-sm">Total Transactions: {{ mytx }}</p>
+
+					<div class="my-3"></div>
+
 				</div>
 			</div>
 		</div>
@@ -67,11 +74,11 @@ const data = defineProps(["addr"]);
 let btcaddress = data.addr;
 
 async function getBitcoinBalance(address) {
-	const data = await axiosCall(`https://api.blockcypher.com/v1/btc/main/addrs/${address}/balance`);
+	const data = await axiosCall(`https://api.blockcypher.com/v1/btc/main/addrs/${address}`);
 
-	console.log(data.balance);
+	console.log(data);
 
-	return { bal: data.balance, humanbal: data.balance / 10 ** 8 };
+	return { bal: data.balance, humanbal: data.balance / 10 ** 8, tx: data.n_tx, txs: data.txrefs };
 }
 
 async function findBalPos(address) {
@@ -96,6 +103,9 @@ async function getBossman(balance) {
 
 let mybalance = ref(0);
 let myrank = ref(0);
+let mytx = ref(0);
+let mytxs = ref([]);
+
 let bossmans = ref([]);
 let btcprice = ref(0);
 
@@ -105,7 +115,15 @@ const fetchData = async () => {
 
 		btcprice.value = btcp.bitcoin.usd || 1;
 
-		const { bal, humanbal } = await getBitcoinBalance(btcaddress);
+		const { bal, humanbal, tx, txs } = await getBitcoinBalance(btcaddress);
+
+		if (tx > 0) {
+			for (const tx of txs) {
+				mytxs.value.push({ tx: tx.tx_hash, balance: tx.ref_balance, humanbalance: tx.ref_balance / 10 ** 8, date: tx.confirmed });
+			}
+		}
+
+		mytx.value = tx;
 
 		mybalance.value = humanbal;
 

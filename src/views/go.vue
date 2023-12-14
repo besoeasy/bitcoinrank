@@ -93,11 +93,13 @@
 
 	const fetchData = async () => {
 		try {
-			const { bal, humanbal } = (await getBitcoinBalance(btcaddress)) / 10 ** 8;
+			const { bal } = await getBitcoinBalance(btcaddress);
 
 			mybalance.value = bal;
 
-			myrank.value = (await findBalPos(btcaddress)) || 0;
+			myrank.value = await findBalPos(btcaddress);
+
+			if (myrank.value === 0) return;
 
 			const bossmanx = await getBossman(bal + 1);
 

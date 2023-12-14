@@ -9,12 +9,11 @@
 
 	<div class="my-20">
 		<div class="flex space-x-10 m-auto container">
-			<div class="w-1/3">
-				<img :src="`https://robohash.org/` + btcaddress + `.png?set=set2&size=500x500`" />
-			</div>
-
 			<div class="w-2/3">
 				<canvas id="myChart"></canvas>
+			</div>
+			<div class="w-1/3">
+				<img :src="`https://robohash.org/` + btcaddress + `.png?set=set2&size=500x500`" />
 			</div>
 		</div>
 	</div>

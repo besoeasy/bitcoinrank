@@ -1,6 +1,6 @@
 <template>
 	<div class="bg-yellow-100 text-black">
-		<div class="m-auto container p-10">
+		<div class="m-auto container py-10">
 			<div class="flex items-center justify-center uppercase text-base lg:text-xl space-x-4 lg:space-x-8 font-bold">
 				{{ btcaddress }}
 			</div>
@@ -72,9 +72,13 @@
 		</div>
 	</div>
 
+	<div class="bg-yellow-100 text-black">
+		<div class="m-auto container py-10">
+			<div class="flex items-center justify-center uppercase text-base lg:text-xl space-x-4 lg:space-x-8 font-bold">People Who Outrank You !</div>
+		</div>
+	</div>
+
 	<div class="py-20 m-auto container">
-		<p class="text-3xl text-center">People Who Outrank You !</p>
-		<div class="my-20"></div>
 		<section class="grid w-full grid-cols-1 gap-10 md:grid-cols-3">
 			<div v-for="(bossman, index) of bossmans" :key="index">
 				<a target="_blank" :href="`https://explorer.btc.com/btc/address/` + bossman.address">
@@ -101,30 +105,62 @@
 		</section>
 	</div>
 
-	<div class="my-20">
-		<div class="flex m-auto container">
-			<table class="table-auto">
-				<thead>
-					<tr>
-						<th class="px-4 py-2">Tx</th>
-						<th class="px-4 py-2">Balance</th>
-						<th class="px-4 py-2">Date</th>
-						<th class="px-4 py-2">Confirmations</th>
-						<th class="px-4 py-2">Block Number</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr v-for="(tx, index) of mytxs" :key="index" class="cursor-pointer">
-						<td class="border px-4 py-2">{{ tx.tx }}</td>
-						<td class="border px-4 py-2">{{ tx.balance / 10 ** 8 }} BTC</td>
-						<td class="border px-4 py-2">{{ timeAgo(tx.date) }}</td>
-						<td class="border px-4 py-2">{{ tx.confirmations }}</td>
-						<td class="border px-4 py-2">{{ tx.block }}</td>
-					</tr>
-				</tbody>
-			</table>
+	<div class="bg-yellow-100 text-black">
+		<div class="m-auto container py-10">
+			<div class="flex items-center justify-center uppercase text-base lg:text-xl space-x-4 lg:space-x-8 font-bold">Recent Transactions</div>
 		</div>
 	</div>
+
+	<section class="py-4 overflow-hidden">
+		<div class="container px-4 mx-auto">
+			<div class="pt-5 bg-neutral-50 border border-neutral-100 rounded-xl">
+				<div class="px-6">
+					<div class="w-full overflow-x-auto">
+						<table class="w-full min-w-max">
+							<thead>
+								<tr class="text-left">
+									<th class="p-0 border-b border-neutral-100">
+										<div class="pb-3.5"><a class="text-sm text-gray-400 font-medium uppercase" href="#">Tx</a></div>
+									</th>
+									<th class="p-0 border-b border-neutral-100">
+										<div class="pb-3.5"><a class="text-sm text-gray-400 font-medium" href="#">Balance</a></div>
+									</th>
+									<th class="p-0 border-b border-neutral-100">
+										<div class="pb-3.5"><a class="text-sm text-gray-400 font-medium" href="#">Date</a></div>
+									</th>
+									<th class="p-0 border-b border-neutral-100">
+										<div class="pb-3.5"><a class="text-sm text-gray-400 font-medium" href="#">Confirmations</a></div>
+									</th>
+									<th class="p-0 border-b border-neutral-100">
+										<div class="pb-3.5"><a class="text-sm text-gray-400 font-medium" href="#">Block Number</a></div>
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-for="(tx, index) of mytxs" :key="index" class="cursor-pointer">
+									<td class="py-3 pr-4">
+										<span class="text-sm">{{ tx.tx }}</span>
+									</td>
+									<td class="py-3 pr-4">
+										<span class="text-sm">{{ tx.balance / 10 ** 8 }} BTC</span>
+									</td>
+									<td class="py-3 pr-4">
+										<span class="text-sm">{{ timeAgo(tx.date) }}</span>
+									</td>
+									<td class="py-3 pr-4">
+										<span class="text-sm">{{ tx.confirmations }}</span>
+									</td>
+									<td class="py-3 pr-4 border-b border-neutral-100">
+										<span class="text-sm">{{ tx.block }}</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 </template>
 
 <script setup>
@@ -161,7 +197,7 @@ async function findBalPos(address) {
 }
 
 async function getBossman(balance) {
-	const exp3 = await axiosCall(`https://api.blockchair.com/bitcoin/addresses?q=balance(${balance}..34859739823342)&limit=12&s=balance(asc)`);
+	const exp3 = await axiosCall(`https://api.blockchair.com/bitcoin/addresses?q=balance(${balance}..34859739823342)&limit=9&s=balance(asc)`);
 
 	let bossmans = [];
 

@@ -27,6 +27,16 @@
 
 					<div class="my-3"></div>
 
+					<p class="transition-opacity duration-300 mt-2 text-sm">Last Seen : {{ timeAgo(mytxs[0].date) }}</p>
+
+					<div class="my-3"></div>
+
+					<div id="chart"></div>
+
+					<div v-for="(tx, index) in mytxs" :key="index">
+						<p>{{ tx.balance / 10 ** 8 }} BTC</p>
+						<p>{{ timeAgo(tx.date) }}</p>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -66,6 +76,10 @@
 import { axiosCall } from "@/func.js";
 
 import { ref, onMounted } from "vue";
+
+import { formatDistanceToNow } from "date-fns";
+
+const timeAgo = (date) => formatDistanceToNow(new Date(date), { addSuffix: true });
 
 let addr = ref("");
 
@@ -119,7 +133,7 @@ const fetchData = async () => {
 
 		if (tx > 0) {
 			for (const tx of txs) {
-				mytxs.value.push({ tx: tx.tx_hash, balance: tx.ref_balance, humanbalance: tx.ref_balance / 10 ** 8, date: tx.confirmed });
+				mytxs.value.push({ tx: tx.tx_hash, balance: tx.ref_balance, date: tx.confirmed });
 			}
 		}
 

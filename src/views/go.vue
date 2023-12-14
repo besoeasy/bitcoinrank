@@ -25,7 +25,10 @@
 					<h3 class="mb-2 text-3xl font-medium">#{{ myrank - index }}</h3>
 					<p class="text-base text-gray-400 leading-relaxed">
 						Address: {{ bossman.address }}<br />
-						Balance: {{ bossman.humanbal }}
+						Balance: {{ bossman.humanbal }}<br />
+						Lead Balance: {{ bossman.humanbal - mybalance }}<br />
+						More :
+						<a :href="`https://www.blockchain.com/btc/address/` + bossman.address">Blockchain.com</a>
 					</p>
 				</div>
 			</div>

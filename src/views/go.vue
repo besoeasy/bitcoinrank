@@ -15,6 +15,10 @@
 
 					<div class="my-3"></div>
 
+					<p class="transition-opacity duration-300 mt-2 text-2xl">{{ parseInt(mybalance * btcprice) }} USD</p>
+
+					<div class="my-3"></div>
+
 					<p class="transition-opacity duration-300 mt-2 text-sm">{{ btcaddress }}</p>
 				</div>
 			</div>
@@ -93,9 +97,14 @@ async function getBossman(balance) {
 let mybalance = ref(0);
 let myrank = ref(0);
 let bossmans = ref([]);
+let btcprice = ref(0);
 
 const fetchData = async () => {
 	try {
+		const btcp = await axiosCall(`https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd`, false);
+
+		btcprice.value = btcp.bitcoin.usd || 1;
+
 		const { bal, humanbal } = await getBitcoinBalance(btcaddress);
 
 		mybalance.value = humanbal;

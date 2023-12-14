@@ -1,6 +1,6 @@
 export const setWithTTL = (key, value, ttlInSeconds) => {
 	const now = new Date().getTime();
-	
+
 	const item = {
 		value: value,
 		expiry: now + ttlInSeconds * 1000,
@@ -40,7 +40,7 @@ async function toHash(data) {
 
 import axios from "axios";
 
-export async function axiosCall(url) {
+export async function axiosCall(url, cache = true) {
 	const hashed = await toHash(url);
 
 	if (getWithTTL(hashed)) {
@@ -52,7 +52,7 @@ export async function axiosCall(url) {
 
 	const response = await axios.get(url);
 
-	if (response.data) {
+	if (response.data && cache) {
 		setWithTTL(hashed, response.data, 60 * 60 * 24 * 2);
 	}
 

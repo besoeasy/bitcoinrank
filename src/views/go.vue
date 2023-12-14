@@ -93,9 +93,9 @@
 
 	const fetchData = async () => {
 		try {
-			const { bal } = await getBitcoinBalance(btcaddress);
+			const { bal, humanbal } = await getBitcoinBalance(btcaddress);
 
-			mybalance.value = bal;
+			mybalance.value = humanbal;
 
 			myrank.value = await findBalPos(btcaddress);
 

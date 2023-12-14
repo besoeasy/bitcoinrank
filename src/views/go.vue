@@ -9,7 +9,7 @@
 		</div>
 	</section>
 
-	<section class="bg-white py-24 overflow-hidden">
+	<section class="bg-white py-24 overflow-hidden" v-if="bossmans.length > 5">
 		<div class="container px-4 mx-auto">
 			<h2 class="mt-8 mb-24 text-3xl md:text-6xl font-heading font-medium text-center">Your Competion</h2>
 			<div class="relative flex flex-wrap -mx-4 mb-20 lg:mb-32">

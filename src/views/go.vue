@@ -47,15 +47,35 @@
 
 	import axios from 'axios';
 
+	import { sha256 } from 'js-sha256';
+
+	async function toHash(data) {
+		const hash = sha256.create();
+		hash.update(data);
+		return hash.hex();
+	}
+
 	async function axiosCall(url) {
 		console.log(url);
 
+		const hashed = await toHash(url);
+
+		if (localStorage.getItem('lastcachedtime')) {
+			if (Date.now() - localStorage.getItem('lastcachedtime') < 1000 * 60 * 60 * 24 * 7) {
+				if (localStorage.getItem(hashed)) {
+					console.log('cached');
+					return JSON.parse(localStorage.getItem(hashed));
+				}
+			}
+		}
+
+		console.log('Fetchiiiing......... ' + Date.now());
+
 		const response = await axios.get(url);
 
-		if (response.data.status === 430) {
-			console.log('430 error');
-			return;
-		}
+		localStorage.setItem(hashed, JSON.stringify(response.data));
+
+		localStorage.setItem('lastcachedtime', Date.now());
 
 		return response.data;
 	}

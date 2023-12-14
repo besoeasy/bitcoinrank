@@ -1,6 +1,6 @@
 <template>
     <div class="flex min-h-screen" @click="setAddress()">
-        <div class="w-1/2 m-auto p-10">
+        <div class="w-1/3 m-auto p-10">
             <img class="w-full h-full" :src="`https://robohash.org/` + address + `.png?set=set2&size=500x500`" />
 
             <div class="my-5"></div>

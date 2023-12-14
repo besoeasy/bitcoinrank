@@ -1,145 +1,159 @@
 <template>
-	<section class="py-24 2xl:pt-64 2xl:pb-48 font-medium bg-yellow-500 overflow-hidden">
-		<div class="container px-4 mx-auto">
-			<span class="mb-9 tracking-widest text-xs leading-4">{{ btcaddress }}</span>
-			<h2 class="my-12 font-heading text-5xl lg:text-6xl leading-tight">{{ mybalance }} BTC</h2>
-			<h2 class="my-8 font-heading text-3xl lg:text-6xl leading-tight font-light"># {{ myrank }}</h2>
+	<div class="my-40">
+		<div class="flex m-auto container max-w-6xl">
+			<div class="w-1/2">
+				<img class="w-full transform duration-500 hover:scale-110" :src="`https://robohash.org/` + btcaddress + `.png?set=set2&size=500x500`" />
+			</div>
 
-			<div class="my-12"></div>
-		</div>
-	</section>
+			<div class="w-1/2">
+				<div class="m-auto">
+					<p class="transition-opacity duration-300 mt-2 text-xl">Your Global Rank # {{ myrank }}</p>
 
-	<section>
-		<div class="m-auto container my-20" v-if="bossmans.length > 5">
-			<div class="flex flex-wrap -mx-4">
-				<div
-					v-for="(bossman, index) in bossmans"
-					:key="index"
-					class="relative w-full md:w-1/2 lg:w-1/4 px-4 mb-20 lg:mb-0 md:mt-32 bg-white"
-				>
-					<img
-						class="h-32 w-32 mb-12 rounded-lg"
-						:src="`https://robohash.org/` + bossman.address + `.png?set=set2&size=500x500`"
-						alt=""
-					/>
-					<h3 class="mb-2 text-3xl font-medium">#{{ myrank - index - 1 }}</h3>
-					<p class="text-base text-gray-400 leading-relaxed">
-						Address: {{ bossman.address }}<br />
-						Balance: {{ bossman.humanbal }}<br />
-						Lead Balance: {{ bossman.humanbal - mybalance }}<br />
-						More :
-						<a target="_blank" :href="`https://explorer.btc.com/btc/address/` + bossman.address"
-							>more</a
-						>
-					</p>
+					<div class="my-3"></div>
+
+					<p class="transition-opacity duration-300 mt-2 text-2xl">{{ mybalance }} BTC</p>
+
+					<div class="my-3"></div>
+
+					<p class="transition-opacity duration-300 mt-2 text-sm">{{ btcaddress }}</p>
 				</div>
 			</div>
 		</div>
-	</section>
+	</div>
+
+	<div class="py-20 m-auto container">
+		<p class="text-3xl text-center ">People Who Outrank You !</p>
+		<div class="my-20"></div>
+		<section class="grid w-full grid-cols-1 gap-10 md:grid-cols-3">
+			<div v-for="(bossman, index) of bossmans" :key="index">
+				<a target="_blank" :href="`https://explorer.btc.com/btc/address/` + bossman.address">
+					<div
+						class="bg-yellow-50 flex flex-col col-span-1 hover:col-span-2 items-center justify-center shadow-xl py-10 px-10 transform duration-500 hover:scale-110 border-2 rounded-lg hover:border-dashed border-double border-black"
+					>
+						<h3 class="font-medium text-xl"># {{ myrank - index - 1 }}</h3>
+						<p class="bg-green-200 px-2">+ {{ parseFloat(bossman.humanbal - mybalance).toFixed(6) }} BTC</p>
+
+						<div class="relative p-5 transform duration-500 hover:scale-105">
+							<div class="absolute z-10 w-full h-full -mt-5 -ml-5 rounded-full"></div>
+							<img class="relative z-10 w-full" :src="`https://robohash.org/` + bossman.address + `.png?set=set2&size=500x500`" />
+						</div>
+						<div class="mt-3 py-5 text-center">
+							<p class="font-medium text-xl">{{ bossman.humanbal }} BTC</p>
+							<div class="my-3"></div>
+							<p class="text-sm">
+								{{ bossman.address }}
+							</p>
+						</div>
+					</div>
+				</a>
+			</div>
+		</section>
+	</div>
 </template>
 
 <script setup>
-	import { ref, onMounted } from 'vue';
+import { ref, onMounted } from "vue";
 
-	let addr = ref('');
+let addr = ref("");
 
-	const data = defineProps(['addr']);
+const data = defineProps(["addr"]);
 
-	let btcaddress = data.addr;
+let btcaddress = data.addr;
 
-	import axios from 'axios';
+import axios from "axios";
 
-	import { sha256 } from 'js-sha256';
+import { sha256 } from "js-sha256";
 
-	async function toHash(data) {
-		const hash = sha256.create();
-		hash.update(data);
-		return hash.hex();
-	}
+async function toHash(data) {
+	const hash = sha256.create();
+	hash.update(data);
+	return hash.hex();
+}
 
-	async function axiosCall(url) {
-		console.log(url);
+async function axiosCall(url) {
+	console.log(url);
 
-		const hashed = await toHash(url);
+	const hashed = await toHash(url);
 
-		if (localStorage.getItem('lastcachedtime')) {
-			if (Date.now() - localStorage.getItem('lastcachedtime') < 1000 * 60 * 60 * 24 * 7) {
-				if (localStorage.getItem(hashed)) {
-					console.log('cached');
-					return JSON.parse(localStorage.getItem(hashed));
-				}
+	if (localStorage.getItem("lastcachedtime")) {
+		if (Date.now() - localStorage.getItem("lastcachedtime") < 1000 * 60 * 60 * 24 * 7) {
+			if (localStorage.getItem(hashed)) {
+				console.log("cached");
+				return JSON.parse(localStorage.getItem(hashed));
 			}
 		}
+	}
 
-		console.log('Fetchiiiing......... ' + Date.now());
+	console.log("Fetchiiiing......... " + Date.now());
 
-		const response = await axios.get(url);
+	const response = await axios.get(url);
 
+	if (response.data) {
 		localStorage.setItem(hashed, JSON.stringify(response.data));
 
-		localStorage.setItem('lastcachedtime', Date.now());
-
-		return response.data;
+		localStorage.setItem("lastcachedtime", Date.now());
 	}
 
-	async function getBitcoinBalance(address) {
-		const data = await axiosCall(`https://api.blockcypher.com/v1/btc/main/addrs/${address}/balance`);
+	return response.data;
+}
 
-		console.log(data.balance);
+async function getBitcoinBalance(address) {
+	const data = await axiosCall(`https://api.blockcypher.com/v1/btc/main/addrs/${address}/balance`);
 
-		return { bal: data.balance, humanbal: data.balance / 10 ** 8 };
+	console.log(data.balance);
+
+	return { bal: data.balance, humanbal: data.balance / 10 ** 8 };
+}
+
+async function findBalPos(address) {
+	const { bal, humanbal } = await getBitcoinBalance(address);
+
+	const exp2 = await axiosCall(`https://api.blockchair.com/bitcoin/addresses?a=count()&q=balance(${bal}..34859739823342)`);
+
+	return exp2.data[0]["count()"] || 0;
+}
+
+async function getBossman(balance) {
+	const exp3 = await axiosCall(`https://api.blockchair.com/bitcoin/addresses?q=balance(${balance}..34859739823342)&limit=12&s=balance(asc)`);
+
+	let bossmans = [];
+
+	for (let i = 0; i < exp3.data.length; i++) {
+		bossmans.push(exp3.data[i].address);
 	}
 
-	async function findBalPos(address) {
-		const { bal, humanbal } = await getBitcoinBalance(address);
+	return bossmans;
+}
 
-		const exp2 = await axiosCall(`https://api.blockchair.com/bitcoin/addresses?a=count()&q=balance(${bal}..34859739823342)`);
 
-		return exp2.data[0]['count()'] || 0;
-	}
+let mybalance = ref(0);
+let myrank = ref(0);
+let bossmans = ref([]);
 
-	async function getBossman(balance) {
-		const exp3 = await axiosCall(
-			`https://api.blockchair.com/bitcoin/addresses?q=balance(${balance}..34859739823342)&limit=10&s=balance(asc)`
-		);
+const fetchData = async () => {
+	try {
+		const { bal, humanbal } = await getBitcoinBalance(btcaddress);
 
-		let bossmans = [];
+		mybalance.value = humanbal;
 
-		for (let i = 0; i < exp3.data.length; i++) {
-			bossmans.push(exp3.data[i].address);
+		myrank.value = await findBalPos(btcaddress);
+
+		if (myrank.value === 0) return;
+
+		const bossmanx = await getBossman(bal + 1);
+
+		console.log(bossmanx);
+
+		for (const address of bossmanx) {
+			const { bal, humanbal } = await getBitcoinBalance(address);
+			bossmans.value.push({ address, bal, humanbal });
 		}
 
-		return bossmans;
+		console.log(bossmans);
+	} catch (error) {
+		console.error("Error fetching data:", error);
 	}
+};
 
-	let mybalance = ref(0);
-	let myrank = ref(0);
-	let bossmans = ref([]);
-
-	const fetchData = async () => {
-		try {
-			const { bal, humanbal } = await getBitcoinBalance(btcaddress);
-
-			mybalance.value = humanbal;
-
-			myrank.value = await findBalPos(btcaddress);
-
-			if (myrank.value === 0) return;
-
-			const bossmanx = await getBossman(bal + 1);
-
-			console.log(bossmanx);
-
-			for (const address of bossmanx) {
-				const { bal, humanbal } = await getBitcoinBalance(address);
-				bossmans.value.push({ address, bal, humanbal });
-			}
-
-			console.log(bossmans);
-		} catch (error) {
-			console.error('Error fetching data:', error);
-		}
-	};
-
-	onMounted(fetchData);
+onMounted(fetchData);
 </script>

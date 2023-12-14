@@ -1,40 +1,42 @@
 <template>
-    <div class="flex min-h-screen" @click="setAddress()">
-        <div class="w-1/3 m-auto p-10">
-            <img class="w-full h-full" :src="`https://robohash.org/` + address + `.png?set=set2&size=500x500`" />
+	<div class="flex min-h-screen" @click="setAddress()">
+		<div class="w-1/3 m-auto p-10">
+			<img class="w-full h-full" :src="`https://robohash.org/` + address + `.png?set=set2&size=500x500`" />
 
-            <div class="my-5"></div>
+			<div class="my-5"></div>
 
-            <input class="p-4 w-full bg-green-300 hover:bg-orange-400 rounded-lg text-center text-gray-800" v-model="address" placeholder="Enter Bitcoin address" />
+			<input class="p-4 w-full bg-green-300 hover:bg-orange-400 rounded-lg text-center text-gray-800" v-model="address" placeholder="Enter Bitcoin address" />
 
-            <div class="my-5"></div>
+			<div class="my-5"></div>
 
-            <RouterLink :to="getRoute"><button class="p-4 w-full bg-green-300 hover:bg-orange-300 rounded-lg text-center text-xl">Fetch</button></RouterLink>
-        </div>
-    </div>
+			<RouterLink :to="getRoute"><button class="p-4 w-full bg-green-300 hover:bg-orange-300 rounded-lg text-center text-xl">Fetch</button></RouterLink>
+		</div>
+	</div>
 </template>
 
 <script setup>
+import { getWithTTL, setWithTTL } from "@/func.js";
+
 import { RouterLink } from "vue-router";
+
 import { ref, computed } from "vue";
 
 let address = ref("");
 
-if (localStorage.getItem("btcaddress")) {
-    console.log("Found address in localStorage");
-    address.value = localStorage.getItem("btcaddress");
+if (getWithTTL("btcaddress")) {
+	address.value = getWithTTL("btcaddress");
 }
 
 function setAddress() {
-    console.log("Setting address in localStorage");
-    localStorage.setItem("btcaddress", address.value);
+	console.log("Setting address in localStorage");
+	setWithTTL("btcaddress", address.value, 60 * 60 * 24 * 10);
 }
 
 let getRoute = computed(() => {
-    if (address.value) {
-        return { name: 'go', params: { addr: address.value } };
-    } else {
-        return { name: 'home' }; // replace 'home' with the name of your fallback route
-    }
+	if (address.value) {
+		return { name: "go", params: { addr: address.value } };
+	} else {
+		return { name: "home" }; // replace 'home' with the name of your fallback route
+	}
 });
 </script>

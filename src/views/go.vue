@@ -22,7 +22,7 @@
 	</div>
 
 	<div class="py-20 m-auto container">
-		<p class="text-3xl text-center ">People Who Outrank You !</p>
+		<p class="text-3xl text-center">People Who Outrank You !</p>
 		<div class="my-20"></div>
 		<section class="grid w-full grid-cols-1 gap-10 md:grid-cols-3">
 			<div v-for="(bossman, index) of bossmans" :key="index">
@@ -52,6 +52,8 @@
 </template>
 
 <script setup>
+import { axiosCall } from "@/func.js";
+
 import { ref, onMounted } from "vue";
 
 let addr = ref("");
@@ -59,43 +61,6 @@ let addr = ref("");
 const data = defineProps(["addr"]);
 
 let btcaddress = data.addr;
-
-import axios from "axios";
-
-import { sha256 } from "js-sha256";
-
-async function toHash(data) {
-	const hash = sha256.create();
-	hash.update(data);
-	return hash.hex();
-}
-
-async function axiosCall(url) {
-	console.log(url);
-
-	const hashed = await toHash(url);
-
-	if (localStorage.getItem("lastcachedtime")) {
-		if (Date.now() - localStorage.getItem("lastcachedtime") < 1000 * 60 * 60 * 24 * 7) {
-			if (localStorage.getItem(hashed)) {
-				console.log("cached");
-				return JSON.parse(localStorage.getItem(hashed));
-			}
-		}
-	}
-
-	console.log("Fetchiiiing......... " + Date.now());
-
-	const response = await axios.get(url);
-
-	if (response.data) {
-		localStorage.setItem(hashed, JSON.stringify(response.data));
-
-		localStorage.setItem("lastcachedtime", Date.now());
-	}
-
-	return response.data;
-}
 
 async function getBitcoinBalance(address) {
 	const data = await axiosCall(`https://api.blockcypher.com/v1/btc/main/addrs/${address}/balance`);
@@ -124,7 +89,6 @@ async function getBossman(balance) {
 
 	return bossmans;
 }
-
 
 let mybalance = ref(0);
 let myrank = ref(0);

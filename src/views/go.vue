@@ -1,14 +1,20 @@
 <template>
-	<div class="my-40">
-		<div class="flex m-auto container max-w-5xl">
-			<div class="w-1/2">
-				<img class="w-full h-full" :src="`https://robohash.org/` + btcaddress + `.png?set=set2&size=500x500`" />
+	<div class="bg-yellow-100 text-black">
+		<div class="m-auto container p-10">
+			<div class="flex items-center justify-center uppercase text-base lg:text-xl space-x-4 lg:space-x-8 font-bold">
+				{{ btcaddress }}
+			</div>
+		</div>
+	</div>
+
+	<div class="my-20">
+		<div class="flex space-x-10 m-auto container">
+			<div class="w-1/3">
+				<img :src="`https://robohash.org/` + btcaddress + `.png?set=set2&size=500x500`" />
 			</div>
 
-			<div class="w-1/2">
-				<div class="m-auto">
-					<p class="transition-opacity duration-300 mt-2 text-sm">{{ btcaddress }}</p>
-				</div>
+			<div class="w-2/3">
+				<canvas id="myChart"></canvas>
 			</div>
 		</div>
 	</div>
@@ -24,6 +30,16 @@
 						<h2 class="mb-2 text-3xl font-bold"># {{ myrank }}</h2>
 					</div>
 				</div>
+
+				<div class="w-full lg:w-1/4 p-4">
+					<div class="p-6 rounded bg-white">
+						<div class="flex mb-2">
+							<h3 class="text-sm text-gray-600">Total Transactions :</h3>
+						</div>
+						<h2 class="mb-2 text-3xl font-bold">{{ mytx }}</h2>
+					</div>
+				</div>
+
 				<div class="w-full lg:w-1/4 p-4">
 					<div class="p-6 rounded bg-white">
 						<div class="flex mb-2">
@@ -43,14 +59,7 @@
 						</span>
 					</div>
 				</div>
-				<div class="w-full lg:w-1/4 p-4">
-					<div class="p-6 rounded bg-white">
-						<div class="flex mb-2">
-							<h3 class="text-sm text-gray-600">Total Transactions :</h3>
-						</div>
-						<h2 class="mb-2 text-3xl font-bold">{{ mytx }}</h2>
-					</div>
-				</div>
+
 				<div class="w-full lg:w-1/4 p-4">
 					<div class="p-6 rounded bg-white">
 						<div class="flex mb-2">
@@ -59,14 +68,6 @@
 						<h2 class="mb-2 text-3xl font-bold">{{ lastseen }}</h2>
 					</div>
 				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="my-20">
-		<div class="flex m-auto container">
-			<div class="w-2/3">
-				<canvas id="myChart"></canvas>
 			</div>
 		</div>
 	</div>
@@ -98,6 +99,31 @@
 				</a>
 			</div>
 		</section>
+	</div>
+
+	<div class="my-20">
+		<div class="flex m-auto container">
+			<table class="table-auto">
+				<thead>
+					<tr>
+						<th class="px-4 py-2">Tx</th>
+						<th class="px-4 py-2">Balance</th>
+						<th class="px-4 py-2">Date</th>
+						<th class="px-4 py-2">Confirmations</th>
+						<th class="px-4 py-2">Block Number</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="(tx, index) of mytxs" :key="index" class="cursor-pointer">
+						<td class="border px-4 py-2">{{ tx.tx }}</td>
+						<td class="border px-4 py-2">{{ tx.balance / 10 ** 8 }} BTC</td>
+						<td class="border px-4 py-2">{{ timeAgo(tx.date) }}</td>
+						<td class="border px-4 py-2">{{ tx.confirmations }}</td>
+						<td class="border px-4 py-2">{{ tx.block }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </template>
 
@@ -167,7 +193,7 @@ const fetchData = async () => {
 			lastseen.value = timeAgo(txs[0].confirmed);
 
 			for (const tx of txs) {
-				mytxs.value.push({ tx: tx.tx_hash, balance: tx.ref_balance, date: tx.confirmed });
+				mytxs.value.push({ tx: tx.tx_hash, balance: tx.ref_balance, date: tx.confirmed, block: tx.block_height, confirmations: tx.confirmations });
 			}
 		}
 
@@ -200,7 +226,6 @@ const fetchData = async () => {
 					{
 						label: "Balance",
 						data: mytxs.value.map((tx) => tx.balance / 10 ** 8),
-						backgroundColor: ["rgba(255, 99, 132, 0.2)"],
 						borderColor: ["rgba(255, 99, 132, 1)"],
 						borderWidth: 1,
 					},
@@ -208,8 +233,21 @@ const fetchData = async () => {
 			},
 			options: {
 				scales: {
+					x: {
+						grid: {
+							display: false, // Hide x-axis background grid
+						},
+					},
 					y: {
-						beginAtZero: true,
+						grid: {
+							display: false, // Hide y-axis background grid
+						},
+						// You can also customize the y-axis grid here if needed
+					},
+				},
+				plugins: {
+					legend: {
+						display: false,
 					},
 				},
 			},

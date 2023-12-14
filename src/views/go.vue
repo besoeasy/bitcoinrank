@@ -22,13 +22,15 @@
 						:src="`https://robohash.org/` + bossman.address + `.png?set=set2&size=500x500`"
 						alt=""
 					/>
-					<h3 class="mb-2 text-3xl font-medium">#{{ myrank - index }}</h3>
+					<h3 class="mb-2 text-3xl font-medium">#{{ myrank - index - 1 }}</h3>
 					<p class="text-base text-gray-400 leading-relaxed">
 						Address: {{ bossman.address }}<br />
 						Balance: {{ bossman.humanbal }}<br />
 						Lead Balance: {{ bossman.humanbal - mybalance }}<br />
 						More :
-						<a :href="`https://www.blockchain.com/btc/address/` + bossman.address">Blockchain.com</a>
+						<a target="_blank" :href="`https://explorer.btc.com/btc/address/` + bossman.address"
+							>more</a
+						>
 					</p>
 				</div>
 			</div>

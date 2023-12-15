@@ -9,11 +9,16 @@
 
 	<div class="my-20">
 		<div class="flex space-x-10 m-auto container">
-			<div class="w-2/3">
-				<canvas id="myChart"></canvas>
+			<div class="w-1/4">
+				<img class="shadow-xl bg-yellow-100 rounded-lg" :src="`https://robohash.org/` + btcaddress + `.png?set=set2&size=500x500`" />
 			</div>
-			<div class="w-1/3">
-				<img :src="`https://robohash.org/` + btcaddress + `.png?set=set2&size=500x500`" />
+
+			<div class="w-1/4">
+				<img class="shadow-xl rounded-lg" :src="`https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=` + btcaddress" />
+			</div>
+
+			<div class="w-1/2">
+				<canvas class="p-2" id="myChart"></canvas>
 			</div>
 		</div>
 	</div>
@@ -78,7 +83,7 @@
 	</div>
 
 	<div class="py-20 m-auto container">
-		<section class="grid w-full grid-cols-1 gap-10 md:grid-cols-3">
+		<section class="grid w-full grid-cols-1 gap-10 md:grid-cols-3 lg:grid-cols-4">
 			<div v-for="(bossman, index) of bossmans" :key="index">
 				<a target="_blank" :href="`https://explorer.btc.com/btc/address/` + bossman.address">
 					<div
@@ -87,10 +92,8 @@
 						<h3 class="font-medium text-xl"># {{ myrank - index - 1 }}</h3>
 						<p class="bg-green-200 px-2">+ {{ parseFloat(bossman.humanbal - mybalance).toFixed(6) }} BTC</p>
 
-						<div class="relative p-5 transform duration-500 hover:scale-105">
-							<div class="absolute z-10 w-full h-full -mt-5 -ml-5 rounded-full"></div>
-							<img class="relative z-10 w-full" :src="`https://robohash.org/` + bossman.address + `.png?set=set2&size=500x500`" />
-						</div>
+						<img class="w-full" :src="`https://robohash.org/` + bossman.address + `.png?set=set2&size=500x500`" />
+
 						<div class="mt-3 py-5 text-center">
 							<p class="font-medium text-xl">{{ bossman.humanbal }} BTC</p>
 							<div class="my-3"></div>
@@ -138,7 +141,7 @@
 							<tbody>
 								<tr v-for="(tx, index) of mytxs" :key="index" class="cursor-pointer">
 									<td class="py-3 pr-4">
-										<span class="text-sm">{{ tx.tx }}</span>
+										<a :href="'https://explorer.btc.com/btc/tx/' + tx.tx" target="_blank" class="text-sm">{{ tx.tx }}</a>
 									</td>
 									<td class="py-3 pr-4">
 										<span class="text-sm">{{ tx.balance / 10 ** 8 }} BTC</span>

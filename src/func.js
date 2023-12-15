@@ -13,7 +13,7 @@ export const setWithTTL = (key, value, ttlInSeconds) => {
 
 			if (storedItem && storedItem.expiry && storedItem.expiry < now) {
 				localStorage.removeItem(storageKey);
-				console.log("cleaning up cache");
+				console.log('cleaning up cache');
 			}
 		}
 	}
@@ -31,7 +31,7 @@ export const getWithTTL = (key) => {
 	return item.value || null;
 };
 
-import { sha256 } from "js-sha256";
+import { sha256 } from 'js-sha256';
 
 async function toHash(data) {
 	const hash = sha256.create();
@@ -39,7 +39,7 @@ async function toHash(data) {
 	return hash.hex();
 }
 
-import axios from "axios";
+import axios from 'axios';
 
 export async function axiosCall(url, cache = true) {
 	const hashed = await toHash(url);
@@ -59,7 +59,6 @@ export async function axiosCall(url, cache = true) {
 	return response.data;
 }
 
-
-import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow } from 'date-fns';
 
 export const timeAgo = (date) => formatDistanceToNow(new Date(date), { addSuffix: true });

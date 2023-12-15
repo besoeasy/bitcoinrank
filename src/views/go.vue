@@ -1,7 +1,7 @@
 <template>
 	<div class="bg-yellow-100 text-black">
 		<div class="m-auto container py-10">
-			<div class="flex items-center justify-center  text-base lg:text-xl space-x-4 lg:space-x-8 font-bold">
+			<div class="flex items-center justify-center text-base lg:text-xl space-x-4 lg:space-x-8 font-bold">
 				{{ btcaddress }}
 			</div>
 		</div>
@@ -177,7 +177,7 @@
 
 			const btcp = await axiosCall(`https://www.okx.com/api/v5/market/ticker?instId=BTC-USD-SWAP`, false);
 
-			btcprice.value = btcp.data.last || 1;
+			btcprice.value = btcp.data[0].last || 1;
 
 			const { bal, humanbal, tx, txs } = await getBitcoinBalance(btcaddress);
 

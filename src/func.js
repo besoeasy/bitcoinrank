@@ -13,6 +13,7 @@ export const setWithTTL = (key, value, ttlInSeconds) => {
 
 			if (storedItem && storedItem.expiry && storedItem.expiry < now) {
 				localStorage.removeItem(storageKey);
+				console.log("cleaning up cache");
 			}
 		}
 	}
@@ -44,7 +45,6 @@ export async function axiosCall(url, cache = true) {
 	const hashed = await toHash(url);
 
 	if (getWithTTL(hashed)) {
-		console.log("cached");
 		return getWithTTL(hashed);
 	}
 

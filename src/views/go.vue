@@ -199,7 +199,7 @@ async function findBalPos(address) {
 }
 
 async function getBossman(balance) {
-	const exp3 = await axiosCall(`https://api.blockchair.com/bitcoin/addresses?q=balance(${balance}..34859739823342)&limit=9&s=balance(asc)`);
+	const exp3 = await axiosCall(`https://api.blockchair.com/bitcoin/addresses?q=balance(${balance}..34859739823342)&limit=8&s=balance(asc)`);
 
 	let bossmans = [];
 

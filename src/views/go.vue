@@ -9,15 +9,11 @@
 
 	<div class="my-20">
 		<div class="flex space-x-10 m-auto container">
-			<div class="w-1/4">
+			<div class="w-2/4">
 				<img class="shadow-xl bg-yellow-100 rounded-lg" :src="`https://robohash.org/` + btcaddress + `.png?set=set2&size=500x500`" />
 			</div>
 
-			<div class="w-1/4">
-				<img class="shadow-xl rounded-lg" :src="`https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=` + btcaddress" />
-			</div>
-
-			<div class="w-1/2">
+			<div class="w-2/4">
 				<canvas class="p-2" id="myChart"></canvas>
 			</div>
 		</div>
@@ -76,36 +72,7 @@
 		</div>
 	</div>
 
-	<div class="bg-yellow-100 text-black">
-		<div class="m-auto container py-10">
-			<div class="flex items-center justify-center uppercase text-base lg:text-xl space-x-4 lg:space-x-8 font-bold">People Who Outrank You !</div>
-		</div>
-	</div>
-
-	<div class="py-20 m-auto container">
-		<section class="grid w-full grid-cols-1 gap-10 md:grid-cols-3 lg:grid-cols-4">
-			<div v-for="(bossman, index) of bossmans" :key="index">
-				<a target="_blank" :href="`https://explorer.btc.com/btc/address/` + bossman.address">
-					<div
-						class="bg-yellow-50 flex flex-col col-span-1 hover:col-span-2 items-center justify-center shadow-xl py-10 px-10 transform duration-500 hover:scale-110 border-2 rounded-lg hover:border-dashed border-double border-black"
-					>
-						<h3 class="font-medium text-xl"># {{ myrank - index - 1 }}</h3>
-						<p class="bg-green-200 px-2">+ {{ parseFloat(bossman.humanbal - mybalance).toFixed(6) }} BTC</p>
-
-						<img class="w-full" :src="`https://robohash.org/` + bossman.address + `.png?set=set2&size=500x500`" />
-
-						<div class="mt-3 py-5 text-center">
-							<p class="font-medium text-xl">{{ bossman.humanbal }} BTC</p>
-							<div class="my-3"></div>
-							<p class="text-sm">
-								{{ bossman.address }}
-							</p>
-						</div>
-					</div>
-				</a>
-			</div>
-		</section>
-	</div>
+	<BossmanCard :bossmans="bossmans" :myrank="myrank" :mybalance="mybalance" />
 
 	<div class="bg-yellow-100 text-black">
 		<div class="m-auto container py-10">
@@ -141,7 +108,7 @@
 							<tbody>
 								<tr v-for="(tx, index) of mytxs" :key="index" class="cursor-pointer">
 									<td class="py-3 pr-4">
-										<a :href="'https://explorer.btc.com/btc/tx/' + tx.tx" target="_blank" class="text-sm">{{ tx.tx }}</a>
+										<a :href="'https://explorer.btc.com/btc/transaction/' + tx.tx" target="_blank" class="text-sm">{{ tx.tx }}</a>
 									</td>
 									<td class="py-3 pr-4">
 										<span class="text-sm">{{ tx.balance / 10 ** 8 }} BTC</span>
@@ -166,15 +133,13 @@
 </template>
 
 <script setup>
+import BossmanCard from "@/components/BossManCard.vue";
+
 import Chart from "chart.js/auto";
 
-import { axiosCall } from "@/func.js";
+import { axiosCall, timeAgo } from "@/func.js";
 
 import { ref, onMounted } from "vue";
-
-import { formatDistanceToNow } from "date-fns";
-
-const timeAgo = (date) => formatDistanceToNow(new Date(date), { addSuffix: true });
 
 let addr = ref("");
 
@@ -248,8 +213,9 @@ const fetchData = async () => {
 		console.log(bossmanx);
 
 		for (const address of bossmanx) {
-			const { bal, humanbal } = await getBitcoinBalance(address);
-			bossmans.value.push({ address, bal, humanbal });
+			const { bal, humanbal, txs } = await getBitcoinBalance(address);
+			const date = txs[0].confirmed;
+			bossmans.value.push({ address, bal, humanbal, date });
 		}
 
 		console.log(bossmans);

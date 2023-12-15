@@ -58,3 +58,8 @@ export async function axiosCall(url, cache = true) {
 
 	return response.data;
 }
+
+
+import { formatDistanceToNow } from "date-fns";
+
+export const timeAgo = (date) => formatDistanceToNow(new Date(date), { addSuffix: true });

@@ -64,7 +64,7 @@ const fetchData = () => {
 				},
 			},
 		});
-	}, 5000);
+	}, 1000 * 10);
 };
 
 onMounted(fetchData);

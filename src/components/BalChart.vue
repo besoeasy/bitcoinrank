@@ -1,5 +1,5 @@
 <template>
-	<section class="py-24 lg:pb-36 overflow-hidden" v-if="mytranscation">
+	<section class="py-24 lg:pb-36 overflow-hidden" v-if="show">
 		<div class="max-w-6xl m-auto">
 			<canvas class="p-2" id="myChart"></canvas>
 		</div>
@@ -14,6 +14,7 @@
 	import { timeAgo } from '@/func.js';
 
 	let mytranscation = ref([]);
+	let show = ref(false);
 
 	const { mytxs } = defineProps({
 		mytxs: {
@@ -26,6 +27,10 @@
 		setTimeout(() => {
 			mytranscation.value = mytxs.reverse();
 			const ctx = document.getElementById('myChart').getContext('2d');
+
+			if (mytranscation.value.length > 0) {
+				show.value = true;
+			}
 
 			const myChart = new Chart(ctx, {
 				type: 'line',

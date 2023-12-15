@@ -1,6 +1,6 @@
 <template>
 	<div class="flex min-h-screen m-auto container max-w-6xl" @click="setAddress()">
-		<div class="w-1/2 m-auto p-10">
+		<div class="w-full md:w-1/2 m-auto p-10">
 			<img class="w-full h-full" :src="`https://robohash.org/` + address + `.png?set=set2&size=500x500`" />
 
 			<div class="my-5"></div>
@@ -35,7 +35,7 @@
 			></RouterLink>
 		</div>
 
-		<div class="w-1/2 m-auto p-10">
+		<div class="w-full md:w-1/2 m-auto p-10 hidden md:block">
 			<p class="mb-14 text-lg leading-10 text-darkBlueGray-400 max-w-4xl">
 				Ever wondered where you stand in the world of Bitcoin? This app, drawing inspiration from the Bitcoin Rich
 				List, gives you the scoop on your Bitcoin address and its global rank. Plus, it throws in a bunch of other

@@ -3,12 +3,16 @@
 		<div class="mb-20 max-w-2xl mx-auto text-center">
 			<span
 				class="inline-block mb-5 px-3 py-1.5 text-sm text-white uppercase tracking-tight font-semibold bg-gray-600 rounded-full"
-				style="background: url('https://shuffle.dev/basko-assets/images/gradient.png'); background-repeat: no-repeat; background-size: cover"
+				style="
+					background: url('https://shuffle.dev/basko-assets/images/gradient.png');
+					background-repeat: no-repeat;
+					background-size: cover;
+				"
 				>Your Competition</span
 			>
 			<h2 class="font-heading text-3xl tracking-tighter">Wallets that scored more than you</h2>
 		</div>
-		<section class="grid w-full grid-cols-1 gap-8 md:grid-cols-3 lg:grid-cols-4">
+		<section class="grid w-full grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
 			<div v-for="(bossman, index) of bossmans" :key="index">
 				<a target="_blank" :href="`https://explorer.btc.com/btc/address/` + bossman.address">
 					<div
@@ -18,9 +22,14 @@
 					>
 						<p class="font-medium text-xl"># {{ myrank - index - 1 }}</p>
 
-						<p class="bg-green-100 px-2">+ {{ parseFloat(bossman.humanbal - mybalance).toFixed(6) }} BTC</p>
+						<p class="bg-green-100 px-2">
+							+ {{ parseFloat(bossman.humanbal - mybalance).toFixed(6) }} BTC
+						</p>
 
-						<img class="w-full h-full" :src="`https://robohash.org/` + bossman.address + `.png?set=set2&size=500x500`" />
+						<img
+							class="w-full h-full"
+							:src="`https://robohash.org/` + bossman.address + `.png?set=set2&size=500x500`"
+						/>
 
 						<div class="my-3"></div>
 
@@ -32,7 +41,9 @@
 							{{ bossman.address }}
 						</p>
 
-						<p class="text-sm bg-yellow-200 text-gray-600" v-if="hovered[index]">{{ timeAgo(bossman.date) }}</p>
+						<p class="text-sm bg-yellow-200 text-gray-600" v-if="hovered[index]">
+							{{ timeAgo(bossman.date) }}
+						</p>
 					</div>
 				</a>
 			</div>
@@ -41,24 +52,24 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+	import { ref } from 'vue';
 
-import { timeAgo } from "@/func.js";
+	import { timeAgo } from '@/func.js';
 
-let hovered = ref([]);
+	let hovered = ref([]);
 
-const { bossmans, myrank, mybalance } = defineProps({
-	bossmans: {
-		type: Array,
-		required: true,
-	},
-	myrank: {
-		type: Number,
-		required: true,
-	},
-	mybalance: {
-		type: Number,
-		required: true,
-	},
-});
+	const { bossmans, myrank, mybalance } = defineProps({
+		bossmans: {
+			type: Array,
+			required: true,
+		},
+		myrank: {
+			type: Number,
+			required: true,
+		},
+		mybalance: {
+			type: Number,
+			required: true,
+		},
+	});
 </script>

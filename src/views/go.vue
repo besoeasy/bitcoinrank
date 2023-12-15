@@ -1,7 +1,7 @@
 <template>
 	<div class="bg-yellow-100 text-black">
 		<div class="m-auto container py-10">
-			<div class="flex items-center justify-center uppercase text-base lg:text-xl space-x-4 lg:space-x-8 font-bold">
+			<div class="flex items-center justify-center  text-base lg:text-xl space-x-4 lg:space-x-8 font-bold">
 				{{ btcaddress }}
 			</div>
 		</div>

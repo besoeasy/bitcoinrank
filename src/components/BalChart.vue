@@ -1,5 +1,5 @@
 <template>
-	<section class="py-24 lg:pb-36 overflow-hidden">
+	<section class="py-24 lg:pb-36 overflow-hidden" v-if="mytranscation">
 		<div class="max-w-6xl m-auto">
 			<canvas class="p-2" id="myChart"></canvas>
 		</div>

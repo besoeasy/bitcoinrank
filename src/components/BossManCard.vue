@@ -1,5 +1,13 @@
 <template>
-	<div class="py-20 m-auto container">
+	<div class="py-40 m-auto container">
+		<div class="mb-20 max-w-2xl mx-auto text-center">
+			<span
+				class="inline-block mb-5 px-3 py-1.5 text-sm text-white uppercase tracking-tight font-semibold bg-gray-600 rounded-full"
+				style="background: url('https://shuffle.dev/basko-assets/images/gradient.png'); background-repeat: no-repeat; background-size: cover"
+				>Your Competition</span
+			>
+			<h2 class="font-heading text-3xl tracking-tighter">Wallets that scored more than you</h2>
+		</div>
 		<section class="grid w-full grid-cols-1 gap-8 md:grid-cols-3 lg:grid-cols-4">
 			<div v-for="(bossman, index) of bossmans" :key="index">
 				<a target="_blank" :href="`https://explorer.btc.com/btc/address/` + bossman.address">
@@ -24,7 +32,7 @@
 							{{ bossman.address }}
 						</p>
 
-						<p class="text-sm hover:text-base hover:bg-yellow-200 text-gray-600" v-if="hovered[index]">{{ timeAgo(bossman.date) }}</p>
+						<p class="text-sm bg-yellow-200 text-gray-600" v-if="hovered[index]">{{ timeAgo(bossman.date) }}</p>
 					</div>
 				</a>
 			</div>

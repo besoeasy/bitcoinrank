@@ -1,5 +1,5 @@
 <template>
-	<section class="py-24 lg:pb-36 overflow-hidden" v-if="show">
+	<section class="py-24 lg:pb-36 overflow-hidden hidden" :class="show">
 		<div class="max-w-6xl m-auto">
 			<canvas class="p-2" id="myChart"></canvas>
 		</div>
@@ -24,12 +24,14 @@
 	});
 
 	const fetchData = () => {
+		console.log('Building chart');
+
 		setTimeout(() => {
 			mytranscation.value = mytxs.reverse();
 			const ctx = document.getElementById('myChart');
 
 			if (mytranscation.value.length > 0) {
-				show.value = true;
+				show.value = 'md:block';
 			}
 
 			const myChart = new Chart(ctx, {
@@ -72,5 +74,7 @@
 		}, 1000 * 10);
 	};
 
-	onMounted(fetchData);
+	onMounted(() => {
+		fetchData();
+	});
 </script>

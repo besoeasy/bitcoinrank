@@ -14,7 +14,7 @@
 		</div>
 		<section class="grid w-full grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
 			<div v-for="(bossman, index) of bossmans" :key="index">
-				<a target="_blank" :href="`https://explorer.btc.com/btc/address/` + bossman.address">
+				<RouterLink :to="{ name: 'go', params: { addr: bossman.address } }">
 					<div
 						@mouseover="hovered[index] = true"
 						@mouseleave="hovered[index] = false"
@@ -45,13 +45,15 @@
 							{{ timeAgo(bossman.date) }}
 						</p>
 					</div>
-				</a>
+				</RouterLink>
 			</div>
 		</section>
 	</div>
 </template>
 
 <script setup>
+	import { RouterLink } from 'vue-router';
+
 	import { ref } from 'vue';
 
 	import { timeAgo } from '@/func.js';

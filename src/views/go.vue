@@ -1,7 +1,7 @@
 <template>
 	<TopBar :btcaddress="btcaddress" />
 
-	<section class="py-24 lg:py-40 overflow-hidden">
+	<section class="py-24 lg:py-40 overflow-hidden" id="main">
 		<div class="container px-4 mx-auto">
 			<div class="flex flex-wrap items-center -m-8">
 				<div class="w-full md:w-2/4 p-8">

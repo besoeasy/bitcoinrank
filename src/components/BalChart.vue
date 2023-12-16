@@ -30,7 +30,7 @@
 			mytranscation.value = mytxs.reverse();
 			const ctx = document.getElementById('myChart');
 
-			if (mytranscation.value.length > 0) {
+			if (mytranscation.value.length > 2) {
 				show.value = 'md:block';
 			}
 

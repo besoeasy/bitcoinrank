@@ -82,14 +82,14 @@
 
 	function setAddress() {
 		console.log('Setting address in localStorage');
-		setWithTTL('btcaddress', address.value, 60 * 60 * 24 * 10);
+		setWithTTL('btcaddress', address.value, 60 * 60 * 24 * 30);
 	}
 
 	let getRoute = computed(() => {
 		if (address.value) {
 			return { name: 'go', params: { addr: address.value } };
 		} else {
-			return { name: 'home' }; // replace 'home' with the name of your fallback route
+			return { name: 'home' };
 		}
 	});
 </script>

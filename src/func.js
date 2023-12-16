@@ -46,9 +46,11 @@ const $toast = useToast();
 import axios from "axios";
 
 export async function axiosCall(url, cache = true) {
-	try {
-		const hashed = await toHash(url);
+	const hashed = await toHash(url);
 
+	const domain = new URL(url).hostname;
+
+	try {
 		if (getWithTTL(hashed)) {
 			return getWithTTL(hashed);
 		}
@@ -58,12 +60,12 @@ export async function axiosCall(url, cache = true) {
 		const response = await axios.get(url);
 
 		if (response.data && cache) {
-			setWithTTL(hashed, response.data, 60 * 60 * 24 * 2);
+			setWithTTL(hashed, response.data, 60 * 60 * 24 * 4);
 		}
 
 		return response.data;
 	} catch (error) {
-		$toast.info("Error fetching data for " + url, { position: "bottom", queue: true, duration: 5000, pauseOnHover: true });
+		$toast.info(`Error fetching data for ${domain}`, { position: "bottom", queue: true, duration: 1000 * 10, pauseOnHover: true });
 
 		console.log(error);
 	}

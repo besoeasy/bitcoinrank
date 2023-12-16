@@ -26,7 +26,7 @@
 	const fetchData = () => {
 		setTimeout(() => {
 			mytranscation.value = mytxs.reverse();
-			const ctx = document.getElementById('myChart').getContext('2d');
+			const ctx = document.getElementById('myChart');
 
 			if (mytranscation.value.length > 0) {
 				show.value = true;

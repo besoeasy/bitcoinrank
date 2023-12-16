@@ -8,7 +8,7 @@
 			>
 			<h2 class="font-heading text-3xl tracking-tighter">Wallets that scored more than you</h2>
 		</div>
-		<section class="grid w-full grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+		<section class="grid w-full grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 			<div v-for="(bossman, index) of bossmans" :key="index">
 				<RouterLink :to="{ name: 'go', params: { addr: bossman.address } }">
 					<div

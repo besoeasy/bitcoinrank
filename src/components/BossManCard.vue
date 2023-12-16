@@ -18,7 +18,7 @@
 					>
 						<p class="font-medium text-xl"># {{ myrank - index - 1 }}</p>
 
-						<p class="bg-green-100 px-2">+ {{ parseFloat(bossman.humanbal - mybalance).toFixed(8) }} BTC</p>
+						<p class="bg-green-100 px-2" v-if="hovered[index]">+ {{ parseFloat(bossman.humanbal - mybalance).toFixed(8) }} BTC</p>
 
 						<img class="w-full h-full" :src="`https://robohash.org/` + bossman.address + `.png?set=set2&size=500x500`" />
 

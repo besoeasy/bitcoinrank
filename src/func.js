@@ -13,7 +13,7 @@ export const setWithTTL = (key, value, ttlInSeconds) => {
 
 			if (storedItem && storedItem.expiry && storedItem.expiry < now) {
 				localStorage.removeItem(storageKey);
-				console.log('cleaning up cache');
+				console.log("cleaning up cache");
 			}
 		}
 	}
@@ -31,7 +31,7 @@ export const getWithTTL = (key) => {
 	return item.value || null;
 };
 
-import { sha256 } from 'js-sha256';
+import { sha256 } from "js-sha256";
 
 async function toHash(data) {
 	const hash = sha256.create();
@@ -39,26 +39,36 @@ async function toHash(data) {
 	return hash.hex();
 }
 
-import axios from 'axios';
+import { useToast } from "vue-toast-notification";
+
+const $toast = useToast();
+
+import axios from "axios";
 
 export async function axiosCall(url, cache = true) {
-	const hashed = await toHash(url);
+	try {
+		const hashed = await toHash(url);
 
-	if (getWithTTL(hashed)) {
-		return getWithTTL(hashed);
+		if (getWithTTL(hashed)) {
+			return getWithTTL(hashed);
+		}
+
+		console.log(url, Date.now());
+
+		const response = await axios.get(url);
+
+		if (response.data && cache) {
+			setWithTTL(hashed, response.data, 60 * 60 * 24 * 2);
+		}
+
+		return response.data;
+	} catch (error) {
+		$toast.info("Error fetching data for " + url, { position: "bottom", queue: true, duration: 5000, pauseOnHover: true });
+
+		console.log(error);
 	}
-
-	console.log(url, Date.now());
-
-	const response = await axios.get(url);
-
-	if (response.data && cache) {
-		setWithTTL(hashed, response.data, 60 * 60 * 24 * 2);
-	}
-
-	return response.data;
 }
 
-import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow } from "date-fns";
 
 export const timeAgo = (date) => formatDistanceToNow(new Date(date), { addSuffix: true });

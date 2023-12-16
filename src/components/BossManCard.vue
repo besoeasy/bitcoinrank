@@ -3,11 +3,7 @@
 		<div class="mb-20 max-w-2xl mx-auto text-center">
 			<span
 				class="inline-block mb-5 px-3 py-1.5 text-sm text-white uppercase tracking-tight font-semibold bg-gray-600 rounded-full"
-				style="
-					background: url('https://shuffle.dev/basko-assets/images/gradient.png');
-					background-repeat: no-repeat;
-					background-size: cover;
-				"
+				style="background: url('https://shuffle.dev/basko-assets/images/gradient.png'); background-repeat: no-repeat; background-size: cover"
 				>Your Competition</span
 			>
 			<h2 class="font-heading text-3xl tracking-tighter">Wallets that scored more than you</h2>
@@ -22,14 +18,9 @@
 					>
 						<p class="font-medium text-xl"># {{ myrank - index - 1 }}</p>
 
-						<p class="bg-green-100 px-2">
-							+ {{ parseFloat(bossman.humanbal - mybalance).toFixed(6) }} BTC
-						</p>
+						<p class="bg-green-100 px-2" v-if="parseFloat(bossman.humanbal - mybalance).toFixed(8) > 1">+ {{ parseFloat(bossman.humanbal - mybalance).toFixed(8) }} BTC</p>
 
-						<img
-							class="w-full h-full"
-							:src="`https://robohash.org/` + bossman.address + `.png?set=set2&size=500x500`"
-						/>
+						<img class="w-full h-full" :src="`https://robohash.org/` + bossman.address + `.png?set=set2&size=500x500`" />
 
 						<div class="my-3"></div>
 
@@ -52,26 +43,26 @@
 </template>
 
 <script setup>
-	import { RouterLink } from 'vue-router';
+import { RouterLink } from "vue-router";
 
-	import { ref } from 'vue';
+import { ref } from "vue";
 
-	import { timeAgo } from '@/func.js';
+import { timeAgo } from "@/func.js";
 
-	let hovered = ref([]);
+let hovered = ref([]);
 
-	const { bossmans, myrank, mybalance } = defineProps({
-		bossmans: {
-			type: Array,
-			required: true,
-		},
-		myrank: {
-			type: Number,
-			required: true,
-		},
-		mybalance: {
-			type: Number,
-			required: true,
-		},
-	});
+const { bossmans, myrank, mybalance } = defineProps({
+	bossmans: {
+		type: Array,
+		required: true,
+	},
+	myrank: {
+		type: Number,
+		required: true,
+	},
+	mybalance: {
+		type: Number,
+		required: true,
+	},
+});
 </script>

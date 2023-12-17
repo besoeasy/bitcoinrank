@@ -14,3 +14,4 @@ Ever wondered where you stand in the world of Bitcoin? This app, drawing inspira
 
 [![Website](https://img.shields.io/badge/Website-Visit-blue)](https://bitcoinrank.besoeasy.com/)
 [![Example](https://img.shields.io/badge/Example-View-blue)](https://bitcoinrank.besoeasy.com/#/go/18cBEMRxXHqzWWCxZNtU91F5sbUNKhL5PX)
+[![Speed Test](https://img.shields.io/badge/Speed%20Test-Check-blue)](https://developers.google.com/speed/pagespeed/insights/?url=https%3A%2F%2Fbitcoinrank.besoeasy.com%2F)

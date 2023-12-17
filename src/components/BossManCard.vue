@@ -35,10 +35,10 @@
 							<div class="my-2"></div>
 
 							<p class="text-sm">
-								{{ bossman.address }}
+								{{ truncateAddress(bossman.address) }}
 							</p>
 
-							<p class="text-xs bg-yellow-200" v-if="hovered[index]">
+							<p class="mt-2 text-xs bg-yellow-200" v-if="hovered[index]">
 								Seen : {{ timeAgo(bossman.date) }}
 							</p>
 						</div>
@@ -57,6 +57,15 @@
 	import { timeAgo } from '@/func.js';
 
 	let hovered = ref([]);
+
+	const truncateAddress = (address) => {
+		if (address.length > 35) {
+			const start = address.substring(0, 12);
+			const end = address.substring(address.length - 13);
+			return `${start}...${end}`;
+		}
+		return address;
+	};
 
 	const { bossmans, myrank, mybalance } = defineProps({
 		bossmans: {

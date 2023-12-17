@@ -35,13 +35,13 @@
 							</div>
 
 							<div class="w-full lg:w-4/4 p-4">
-								<h2 class="mb-2 text-xl font-bold uppercase text-gray-600">
+								<h2 class="mb-2 font-bold uppercase text-gray-600">
 									Balance is
-									<span class="bg-blue-100 text-2xl px-2 text-gray-700"
+									<span class="bg-blue-100 text-2xl px-1 text-gray-700"
 										>{{ mybalance }} BTC</span
 									>
 									Equals Approximately
-									<span class="bg-green-100 text-2xl px-2 text-gray-700">{{
+									<span class="bg-green-100 text-2xl px-1 text-gray-700">{{
 										parseInt(mybalance * btcprice)
 									}}</span>
 									USD
@@ -50,7 +50,7 @@
 
 							<div class="w-full lg:w-4/4 p-4">
 								<h2 class="mb-2 text-l font-bold uppercase text-gray-600">
-									Maxium Balance was
+									Recent Maxium Balance was
 									<span class="bg-red-100 text-xl px-1 text-gray-700"
 										>{{ biggestbalance }} BTC</span
 									>

@@ -1,8 +1,15 @@
 <template>
-	<div class="bg-yellow-100 text-black">
+	<div class="text-black">
 		<div class="m-auto container py-8">
 			<div class="flex items-center justify-center text-base lg:text-xl space-x-4 lg:space-x-8 font-semibold">
-				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-2">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					class="w-6 h-6 mr-2"
+				>
 					<path
 						stroke-linecap="round"
 						stroke-linejoin="round"
@@ -17,16 +24,16 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+	import { ref } from 'vue';
 
-let address = ref([]);
+	let address = ref([]);
 
-const { btcaddress } = defineProps({
-	btcaddress: {
-		type: String,
-		required: true,
-	},
-});
+	const { btcaddress } = defineProps({
+		btcaddress: {
+			type: String,
+			required: true,
+		},
+	});
 
-address.value = btcaddress;
+	address.value = btcaddress;
 </script>

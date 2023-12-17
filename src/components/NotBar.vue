@@ -1,5 +1,5 @@
 <template>
-	<div class="bg-yellow-100 text-black">
+	<div class="text-black">
 		<div class="m-auto container py-20">
 			<div class="flex items-center justify-center text-base lg:text-xl space-x-4 lg:space-x-8 font-semibold uppercase">
 				<a v-for="(explorer, index) in blockexplorers" :key="index" :href="explorer.url + btcaddress" target="_blank">

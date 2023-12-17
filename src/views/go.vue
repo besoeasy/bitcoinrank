@@ -1,7 +1,7 @@
 <template>
-	<TopBar :btcaddress="btcaddress" />
+	<TopBar :btcaddress="btcaddress" class="bg-yellow-200" />
 
-	<section class="py-24 lg:py-40 overflow-hidden" id="main">
+	<section class="py-24 lg:py-40 overflow-hidden" id="main" @mouseenter="fetchPrice">
 		<div class="container px-4 mx-auto">
 			<div class="flex flex-wrap items-center -m-8">
 				<div class="w-full md:w-2/4 p-8">
@@ -75,11 +75,11 @@
 		</div>
 	</section>
 
-	<BossmanCard :bossmans="bossmans" :myrank="myrank" :mybalance="mybalance" />
+	<BossmanCard :bossmans="bossmans" :myrank="myrank" :mybalance="mybalance" class="bg-yellow-200" />
 
 	<BalChart :mytxs="mytxs" />
 
-	<NotBar :btcaddress="btcaddress" />
+	<NotBar :btcaddress="btcaddress" class="bg-yellow-200" />
 </template>
 
 <script setup>
@@ -172,5 +172,13 @@
 		}
 	};
 
+	const fetchPrice = async () => {
+		btcprice.value = (await getBitcoinPrice()) || btcprice.value;
+	};
+
 	onMounted(fetchData);
+
+	setInterval(async () => {
+		fetchPrice();
+	}, 1000 * 11);
 </script>

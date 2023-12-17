@@ -9,3 +9,8 @@ Ever wondered where you stand in the world of Bitcoin? This app, drawing inspira
 - Explore Bitcoin addresses on various platforms
 - Responsive design that works on desktop, tablets and mobile
 - Modern, intuitive user interface
+
+## Quick Links
+
+[![Website](https://img.shields.io/badge/Website-Visit-blue)](https://bitcoinrank.besoeasy.com/)
+[![Example](https://img.shields.io/badge/Example-View-blue)](https://bitcoinrank.besoeasy.com/#/go/18cBEMRxXHqzWWCxZNtU91F5sbUNKhL5PX)

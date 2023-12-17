@@ -13,7 +13,7 @@
 					>
 						<p class="font-medium text-xl"># {{ myrank - index - 1 }}</p>
 
-						<p class="bg-green-100 px-2" v-if="hovered[index]">
+						<p class="bg-green-100 px-2 text-sm" v-if="hovered[index]">
 							+ {{ parseFloat(bossman.humanbal - mybalance).toFixed(8) }} BTC
 						</p>
 

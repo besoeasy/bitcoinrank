@@ -79,7 +79,7 @@
 
 	<BalChart :mytxs="mytxs" />
 
-	<ExternalLinks :btcaddress="btcaddress" />
+	<NotBar :btcaddress="btcaddress" />
 </template>
 
 <script setup>
@@ -87,9 +87,9 @@
 
 	import BalChart from '@/components/BalChart.vue';
 
-	import ExternalLinks from '@/components/ExternalLinks.vue';
-
 	import TopBar from '@/components/TopBar.vue';
+
+	import NotBar from '@/components/NotBar.vue';
 
 	import { axiosCall, timeAgo, getBossman, findBalPos, getBitcoinBalance, calculatePercentile, getBitcoinPrice } from '@/func.js';
 

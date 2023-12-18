@@ -160,8 +160,6 @@
 
 			const bossmanx = await getBossman(bal + 1);
 
-			console.log(bossmanx);
-
 			for (const address of bossmanx) {
 				const { bal, humanbal, txs } = await getBitcoinBalance(address);
 				const date = txs[0].confirmed;

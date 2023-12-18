@@ -88,8 +88,6 @@ export function calculatePercentile(position, totalEntries) {
 export async function getBitcoinBalance(address) {
 	const data = await axiosCall(`https://api.blockcypher.com/v1/btc/main/addrs/${address}`);
 
-	console.log(data);
-
 	return { bal: data.balance, humanbal: data.balance / 10 ** 8, tx: data.n_tx, txs: data.txrefs };
 }
 

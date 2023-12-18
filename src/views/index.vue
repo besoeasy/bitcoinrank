@@ -86,7 +86,6 @@
 	}
 
 	function setAddress() {
-		console.log('Setting address in localStorage');
 		setWithTTL('btcaddress', address.value, 60 * 60 * 24 * 30);
 	}
 

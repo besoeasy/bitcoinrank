@@ -87,11 +87,7 @@
 		},
 	});
 
-	const fetchData = () => {
-		console.log(txns.value);
-	};
-
 	onMounted(() => {
-		fetchData();
+		console.log(txns.value.length);
 	});
 </script>

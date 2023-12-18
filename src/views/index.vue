@@ -1,5 +1,5 @@
 <template>
-	<div class="flex min-h-screen m-auto container max-w-6xl" @click="setAddress()">
+	<div class="flex min-h-screen m-auto container max-w-6xl">
 		<div class="w-full md:w-1/2 m-auto p-10">
 			<img class="w-full h-full" :src="`https://robohash.org/` + address + `.png?set=set2&size=500x500`" />
 
@@ -15,6 +15,8 @@
 
 			<RouterLink :to="getRoute"
 				><button
+					v-bind:disabled="!isValid"
+					@click="setAddress()"
 					class="inline-flex items-center justify-center p-4 w-full rounded-lg font-semibold text-center text-xl bg-yellow-200 border-solid border-2 border-gray-800"
 				>
 					FETCH
@@ -69,12 +71,15 @@
 
 <script setup>
 	import { getWithTTL, setWithTTL } from '@/func.js';
-
 	import { RouterLink } from 'vue-router';
-
 	import { ref, computed } from 'vue';
+	import { validate } from 'bitcoin-address-validation';
 
 	let address = ref('');
+
+	let isValid = computed(() => {
+		return validate(address.value);
+	});
 
 	if (getWithTTL('btcaddress')) {
 		address.value = getWithTTL('btcaddress');

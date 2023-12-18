@@ -3,9 +3,9 @@
 </template>
 
 <script setup>
-import { RouterView } from "vue-router";
+	import { RouterView } from 'vue-router';
 
-const x = localStorage.length;
+	const x = localStorage.length;
 
-console.log(`App loaded with : ${x}`);
+	console.log(`App loaded with : ${x}`);
 </script>

@@ -13,7 +13,7 @@ export const setWithTTL = (key, value, ttlInSeconds) => {
 
 			if (storedItem && storedItem.expiry && storedItem.expiry < now) {
 				localStorage.removeItem(storageKey);
-				console.log("cleaning up cache");
+				console.log('cleaning up cache');
 			}
 		}
 	}
@@ -31,7 +31,7 @@ export const getWithTTL = (key) => {
 	return item.value || null;
 };
 
-import { sha256 } from "js-sha256";
+import { sha256 } from 'js-sha256';
 
 async function toHash(data) {
 	const hash = sha256.create();
@@ -39,11 +39,11 @@ async function toHash(data) {
 	return hash.hex();
 }
 
-import { useToast } from "vue-toast-notification";
+import { useToast } from 'vue-toast-notification';
 
 const $toast = useToast();
 
-import axios from "axios";
+import axios from 'axios';
 
 export async function axiosCall(url, cache = true) {
 	const hashed = await toHash(url);
@@ -65,24 +65,24 @@ export async function axiosCall(url, cache = true) {
 
 		return response.data;
 	} catch (error) {
-		$toast.info(`Error fetching data for ${domain}`, { position: "bottom", queue: true, duration: 1000 * 10, pauseOnHover: true });
+		$toast.info(`Error fetching data for ${domain}`, { position: 'bottom', queue: true, duration: 1000 * 10, pauseOnHover: true });
 
 		console.log(error);
 	}
 }
 
-import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow } from 'date-fns';
 
 export const timeAgo = (date) => formatDistanceToNow(new Date(date), { addSuffix: true });
 
 export function calculatePercentile(position, totalEntries) {
 	if (totalEntries === 0) {
-		throw new Error("Total entries cannot be zero");
+		throw new Error('Total entries cannot be zero');
 	}
 
 	const percentile = parseInt(position) / parseInt(totalEntries);
 
-	return (percentile * 100).toFixed(4) + "%";
+	return (percentile * 100).toFixed(4) + '%';
 }
 
 export async function getBitcoinBalance(address) {
@@ -96,7 +96,7 @@ export async function getBitcoinBalance(address) {
 export async function findBalPos(bal) {
 	const exp2 = await axiosCall(`https://api.blockchair.com/bitcoin/addresses?a=count()&q=balance(${bal}..34859739823342)`);
 
-	return exp2.data[0]["count()"] || 0;
+	return exp2.data[0]['count()'] || 0;
 }
 
 export async function getBossman(balance) {

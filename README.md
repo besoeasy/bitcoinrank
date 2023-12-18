@@ -9,6 +9,12 @@ Ever wondered where you stand in the world of Bitcoin? This app, drawing inspira
 - Explore Bitcoin addresses on various platforms
 - Responsive design that works on desktop, tablets and mobile
 - Modern, intuitive user interface
+- Wrappers for all bitcoin functions
+- Get blocks, Address, Transactions
+- Inbuilt Localstorage Caching 
+- API failovers
+- Support for electrum & falcum servers
+- dexieJS (In Development) - Sql queries right in browser  
 
 ## Quick Links
 

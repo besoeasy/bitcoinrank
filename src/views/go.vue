@@ -79,6 +79,8 @@
 
 	<BalChart :mytxs="mytxs" />
 
+	<TxnTable :txns="mytxs" />
+
 	<NotBar :btcaddress="btcaddress" class="bg-yellow-200" />
 </template>
 
@@ -90,6 +92,8 @@
 	import TopBar from '@/components/TopBar.vue';
 
 	import NotBar from '@/components/NotBar.vue';
+
+	import TxnTable from '@/components/TxnTable.vue';
 
 	import { axiosCall, timeAgo, getBossman, findBalPos, getBitcoinBalance, calculatePercentile, getBitcoinPrice } from '@/func.js';
 

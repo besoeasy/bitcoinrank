@@ -69,7 +69,7 @@
 
 	const uniqueTxns = computed(() => {
 		const seen = new Set();
-		return txns.filter((txn) => {
+		const unique = txns.filter((txn) => {
 			if (seen.has(txn.tx)) {
 				return false;
 			} else {
@@ -77,6 +77,7 @@
 				return true;
 			}
 		});
+		return unique.sort((a, b) => a.confirmations - b.confirmations);
 	});
 
 	const { txns } = defineProps({

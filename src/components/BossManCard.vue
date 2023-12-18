@@ -11,7 +11,7 @@
 						<div
 							@mouseover="hovered[index] = true"
 							@mouseleave="hovered[index] = false"
-							class="bg-white flex flex-col col-span-1 hover:col-span-2 items-center justify-center shadow-xl p-10 transform duration-500 hover:scale-105 border-2 rounded-lg hover:border-dashed border-double border-black"
+							class="bg-white flex flex-col col-span-1 hover:col-span-2 items-center justify-center shadow-xl p-10 transform transition-all duration-500 ease-in-out hover:scale-105 border-2 rounded-lg hover:border-dashed border-double border-black"
 						>
 							<p class="font-medium text-xl"># {{ myrank - index - 1 }}</p>
 

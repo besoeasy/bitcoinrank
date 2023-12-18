@@ -13,9 +13,8 @@
 
 			<div class="my-5"></div>
 
-			<RouterLink :to="getRoute"
+			<RouterLink :to="getRoute" v-if="isValid"
 				><button
-					v-bind:disabled="!isValid"
 					@click="setAddress()"
 					class="inline-flex items-center justify-center p-4 w-full rounded-lg font-semibold text-center text-xl bg-yellow-200 border-solid border-2 border-gray-800"
 				>

@@ -1,7 +1,6 @@
 {
   "name": "bitcoinrank",
-  "version": "0.0.0",
-  "private": true,
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "npm i && vite",
@@ -16,7 +15,6 @@
     "js-sha256": "^0.10.1",
     "pinia": "^2.1.7",
     "vue": "^3.3.10",
-    "vue-chart-3": "^3.1.8",
     "vue-router": "^4.2.5",
     "vue-toast-notification": "^3.1.2"
   },

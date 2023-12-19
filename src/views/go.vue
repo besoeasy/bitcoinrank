@@ -95,7 +95,16 @@
 
 	import TxnTable from '@/components/TxnTable.vue';
 
-	import { axiosCall, timeAgo, getBossman, findBalPos, getBitcoinBalance, calculatePercentile, getBitcoinPrice } from '@/func.js';
+	import {
+		axiosCall,
+		timeAgo,
+		getBossman,
+		findBalPos,
+		getBitcoinBalance,
+		calculatePercentile,
+		getBitcoinPrice,
+		getBitcoinNetwork,
+	} from '@/func.js';
 
 	import { ref, onMounted } from 'vue';
 
@@ -123,7 +132,9 @@
 
 	const fetchData = async () => {
 		try {
-			totalcount.value = await findBalPos('0');
+			const maindata = await getBitcoinNetwork();
+
+			totalcount.value = maindata.hodling_addresses;
 
 			btcprice.value = await getBitcoinPrice();
 

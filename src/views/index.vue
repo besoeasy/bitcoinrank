@@ -42,8 +42,31 @@
 				List, gives you the scoop on your Bitcoin address and its global rank. Plus, it throws in a bunch of other
 				cool stats about your Bitcoin wallet to satisfy your curiosity!
 			</p>
+			<RouterLink
+				:to="{ name: 'network' }"
+				class="inline-flex items-center text-green-600 hover:text-green-700 border-b border-green-600 pb-1 hover:border-green-700 mr-4"
+			>
+				<span class="text-xl font-bold tracking-tight">Network</span>
+				<svg class="ml-4" width="16" height="13" viewbox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="M10.8 1L15 7H1"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					></path>
+					<path
+						d="M11 12L15 7"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					></path>
+				</svg>
+			</RouterLink>
+
 			<a
-				class="inline-flex items-center text-green-600 hover:text-green-700 border-b border-green-600 pb-1 hover:border-green-700"
+				class="inline-flex items-center text-green-600 hover:text-green-700 border-b border-green-600 pb-1 hover:border-green-700 mr-4"
 				href="https://github.com/besoeasy/bitcoinrank"
 			>
 				<span class="text-xl font-bold tracking-tight">Github</span>
@@ -73,6 +96,7 @@
 	import { RouterLink } from 'vue-router';
 	import { ref, computed } from 'vue';
 	import { validate } from 'bitcoin-address-validation';
+	import Network from './network.vue';
 
 	let address = ref('');
 

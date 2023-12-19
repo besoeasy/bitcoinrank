@@ -91,6 +91,12 @@ export async function getBitcoinBalance(address) {
 	return { bal: data.balance, humanbal: data.balance / 10 ** 8, tx: data.n_tx, txs: data.txrefs };
 }
 
+export async function getBitcoinNetwork() {
+	const maindata = await axiosCall('https://api.blockchair.com/bitcoin/stats');
+
+	return maindata.data;
+}
+
 export async function findBalPos(bal) {
 	const exp2 = await axiosCall(`https://api.blockchair.com/bitcoin/addresses?a=count()&q=balance(${bal}..34859739823342)`);
 

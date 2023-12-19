@@ -6,6 +6,10 @@ export const setWithTTL = (key, value, ttlInSeconds) => {
 		expiry: now + ttlInSeconds * 1000,
 	};
 
+	localStorage.setItem(key, JSON.stringify(item));
+};
+
+export const getWithTTL = (key) => {
 	if (localStorage.length > 1) {
 		for (let i = 0; i < localStorage.length; i++) {
 			const storageKey = localStorage.key(i);
@@ -18,10 +22,6 @@ export const setWithTTL = (key, value, ttlInSeconds) => {
 		}
 	}
 
-	localStorage.setItem(key, JSON.stringify(item));
-};
-
-export const getWithTTL = (key) => {
 	const itemStr = localStorage.getItem(key);
 
 	if (!itemStr) return null;

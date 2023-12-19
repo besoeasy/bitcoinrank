@@ -96,7 +96,6 @@
 	import { RouterLink } from 'vue-router';
 	import { ref, computed } from 'vue';
 	import { validate } from 'bitcoin-address-validation';
-	import Network from './network.vue';
 
 	let address = ref('');
 
@@ -109,7 +108,7 @@
 	}
 
 	function setAddress() {
-		setWithTTL('btcaddress', address.value, 60 * 60 * 24 * 30);
+		setWithTTL('btcaddress', address.value);
 	}
 
 	let getRoute = computed(() => {

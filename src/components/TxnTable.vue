@@ -86,8 +86,4 @@
 			required: true,
 		},
 	});
-
-	onMounted(() => {
-		console.log(txns.value.length);
-	});
 </script>

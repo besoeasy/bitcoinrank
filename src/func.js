@@ -1,35 +1,32 @@
-export const setWithTTL = (key, value, ttlInSeconds) => {
-	const now = new Date().getTime();
+export const setWithTTL = (key, value) => {
+	const ttlInSeconds = 60 * 60 * 24 * 7; // 1 week
 
-	const item = {
-		value: value,
-		expiry: now + ttlInSeconds * 1000,
-	};
-
-	localStorage.setItem(key, JSON.stringify(item));
+	localStorage.setItem(key, JSON.stringify(value));
+	localStorage.setItem(`${key}_ttl`, Date.now() + ttlInSeconds * 1000);
 };
 
 export const getWithTTL = (key) => {
-	if (localStorage.length > 1) {
-		for (let i = 0; i < localStorage.length; i++) {
-			const storageKey = localStorage.key(i);
-			const storedItem = JSON.parse(localStorage.getItem(storageKey));
+	const itemStr = localStorage.getItem(key);
 
-			if (storedItem && storedItem.expiry && storedItem.expiry < now) {
-				localStorage.removeItem(storageKey);
-				console.log('cleaning up cache');
+	return JSON.parse(itemStr);
+};
+
+export function removeWithTTL() {
+	for (let i = 0; i < localStorage.length; i++) {
+		const key = localStorage.key(i);
+
+		if (key.includes('_ttl')) {
+			const ttl = localStorage.getItem(key);
+
+			if (Date.now() > ttl) {
+				console.log('removing', key);
+
+				localStorage.removeItem(key);
+				localStorage.removeItem(key.replace('_ttl', ''));
 			}
 		}
 	}
-
-	const itemStr = localStorage.getItem(key);
-
-	if (!itemStr) return null;
-
-	const item = JSON.parse(itemStr);
-
-	return item.value || null;
-};
+}
 
 import { sha256 } from 'js-sha256';
 
@@ -47,20 +44,21 @@ import axios from 'axios';
 
 export async function axiosCall(url, cache = true) {
 	const hashed = await toHash(url);
-
 	const domain = new URL(url).hostname;
+
+	removeWithTTL();
+
+	console.log(url, Date.now(), hashed);
 
 	try {
 		if (getWithTTL(hashed)) {
 			return getWithTTL(hashed);
 		}
 
-		console.log(url, Date.now());
-
 		const response = await axios.get(url);
 
 		if (response.data && cache) {
-			setWithTTL(hashed, response.data, 60 * 60 * 24 * 4);
+			setWithTTL(hashed, response.data);
 		}
 
 		return response.data;

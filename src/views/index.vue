@@ -1,4 +1,5 @@
 <template>
+	<NewImg />
 	<div class="flex min-h-screen m-auto container max-w-6xl">
 		<div class="w-full md:w-1/2 m-auto p-10">
 			<img class="w-full h-full" :src="`https://robohash.org/` + address + `.png?set=set2&size=500x500`" />
@@ -96,6 +97,7 @@
 	import { RouterLink } from 'vue-router';
 	import { ref, computed } from 'vue';
 	import { validate } from 'bitcoin-address-validation';
+	import NewImg from '@/components/NewImg.vue';
 
 	let address = ref('');
 

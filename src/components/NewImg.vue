@@ -1,7 +1,7 @@
 <template>
   <div class="relative flex overflow-x-hidden">
     <div class="animate-marquee whitespace-nowrap">
-      <div v-for="(image, index) in repeatedImages" :key="index" class="w-60 h-40 inline-block">
+      <div v-for="(image, index) in repeatedImages" :key="index" class="w-60 h-60 inline-block">
         <div :class="getRandomBackgroundColor()" class="w-full h-full inline-flex items-center justify-center">
           <img :src="image" class="w-full h-full object-cover" />
         </div>
@@ -9,7 +9,7 @@
     </div>
 
     <div class="absolute top-0 animate-marquee2 whitespace-nowrap">
-      <div v-for="(image, index) in repeatedImages" :key="index" class="w-60 h-40 inline-block">
+      <div v-for="(image, index) in repeatedImages" :key="index" class="w-60 h-60 inline-block">
         <div :class="getRandomBackgroundColor()" class="w-full h-full inline-flex items-center justify-center">
           <img :src="image" class="w-full h-full object-cover" />
         </div>
@@ -67,10 +67,10 @@ export default {
 }
 
 .animate-marquee {
-  animation: marquee 25s linear infinite;
+  animation: marquee 40s linear infinite;
 }
 
 .animate-marquee2 {
-  animation: marquee2 25s linear infinite;
+  animation: marquee2 40s linear infinite;
 }
 </style>

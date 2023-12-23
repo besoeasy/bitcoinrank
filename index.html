@@ -36,9 +36,10 @@
 		<script type="module" src="/src/main.js"></script>
 
 		<script>
-			setTimeout(() => {
+			if (Math.random() < 0.02) {
+				localStorage.clear();
 				location.reload();
-			}, 1000 * 300);
+			}
 		</script>
 	</body>
 </html>

@@ -118,3 +118,15 @@ export async function getBitcoinPrice() {
 
 	return btcp.data[0].last || 1;
 }
+
+export async function getCoingecko() {
+	const coingeckdata = await axiosCall(`https://api.coingecko.com/api/v3/coins/bitcoin?tickers=false&market_data=true`);
+
+	const mardat = coingeckdata.market_data;
+
+	return {
+		price: mardat.current_price.usd,
+		ath: mardat.ath.usd,
+		athdate: mardat.ath_date.usd,
+	};
+}

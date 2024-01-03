@@ -1,197 +1,231 @@
 <template>
-	<TopBar :btcaddress="btcaddress" class="bg-yellow-200" />
+  <TopBar :btcaddress="btcaddress" class="bg-yellow-200" />
 
-	<section class="py-24 lg:py-40 overflow-hidden" id="main" @mouseenter="fetchPrice">
-		<div class="container px-4 mx-auto">
-			<div class="flex flex-wrap items-center -m-8">
-				<div class="w-full md:w-2/4 p-8">
-					<div class="m-auto flex items-center justify-center">
-						<img
-							class="bg-yellow-200 transform hover:-translate-y-2 transition duration-500 rounded-2xl"
-							:src="`https://robohash.org/` + btcaddress + `.png?set=set2&size=500x500`"
-							alt=""
-						/>
-					</div>
-				</div>
-				<div class="w-full md:w-2/4 p-8">
-					<div class="md:max-w-md">
-						<div class="flex flex-wrap -m-4">
-							<div class="w-full lg:w-4/4 p-4">
-								<h2 class="mb-2 text-xl font-bold uppercase text-gray-600">
-									You're in the top
-									<span class="bg-blue-100 text-2xl px-2 text-gray-700">{{
-										rankpostest
-									}}</span>
-									of all Bitcoin addresses—ranked
-									<span class="bg-green-100 text-2xl px-2 text-gray-700">{{
-										myrank
-									}}</span>
-									out of
-									<span class="bg-red-100 text-2xl px-2 text-gray-700">{{
-										totalcount
-									}}</span
-									>.
-								</h2>
-							</div>
+  <section
+    class="py-24 lg:py-40 overflow-hidden"
+    id="main"
+    @mouseenter="fetchPrice"
+  >
+    <div class="container px-4 mx-auto">
+      <div class="flex flex-wrap items-center -m-8">
+        <div class="w-full md:w-2/4 p-8">
+          <div class="m-auto flex items-center justify-center">
+            <img
+              class="bg-yellow-200 transform hover:-translate-y-2 transition duration-500 rounded-2xl"
+              :src="
+                `https://robohash.org/` +
+                btcaddress +
+                `.png?set=set2&size=500x500`
+              "
+              alt=""
+            />
+          </div>
+        </div>
+        <div class="w-full md:w-2/4 p-8">
+          <div class="md:max-w-md">
+            <div class="flex flex-wrap -m-4">
+              <div class="w-full lg:w-4/4 p-4">
+                <h2 class="mb-2 text-xl font-bold uppercase text-gray-600">
+                  You're in the top
+                  <span class="bg-blue-100 text-2xl px-2 text-gray-700">{{
+                    rankpostest
+                  }}</span>
+                  of all Bitcoin addresses—ranked
+                  <span class="bg-green-100 text-2xl px-2 text-gray-700">{{
+                    myrank
+                  }}</span>
+                  out of
+                  <span class="bg-red-100 text-2xl px-2 text-gray-700">{{
+                    totalcount
+                  }}</span
+                  >.
+                </h2>
+              </div>
 
-							<div class="w-full lg:w-4/4 p-4">
-								<h2 class="mb-2 font-bold uppercase text-gray-600">
-									Balance is
-									<span class="bg-blue-100 text-2xl px-1 text-gray-700"
-										>{{ mybalance }} BTC</span
-									>
-									Equals Approximately
-									<span class="bg-green-100 text-2xl px-1 text-gray-700">{{
-										parseInt(mybalance * btcprice)
-									}}</span>
-									USD
-								</h2>
-							</div>
+              <div class="w-full lg:w-4/4 p-4">
+                <h2 class="mb-2 font-bold uppercase text-gray-600">
+                  Balance is
+                  <span class="bg-blue-100 text-2xl px-1 text-gray-700"
+                    >{{ mybalance }} BTC</span
+                  >
+                  Equals Approximately
+                  <span class="bg-green-100 text-2xl px-1 text-gray-700">{{
+                    parseInt(mybalance * btcprice)
+                  }}</span>
+                  USD, ATH Balance :
+                  <span class="bg-red-100 text-xl px-1 text-gray-700"
+                    >{{ parseInt(coingeckoData.ath * mybalance) }} USD</span
+                  >
+                </h2>
+              </div>
 
-							<div class="w-full lg:w-4/4 p-4">
-								<h2 class="mb-2 text-l font-bold uppercase text-gray-600">
-									Recent Maxium Balance was
-									<span class="bg-red-100 text-xl px-1 text-gray-700"
-										>{{ biggestbalance }} BTC</span
-									>
-									Almost
-									<span class="bg-cyan-100 text-xl px-1 text-gray-700"
-										>{{ lastseen }} </span
-									>, Total Transactions
-									<span class="bg-blue-100 text-xl px-1 text-gray-700">{{
-										mytx
-									}}</span
-									>, Last Seen
+              <div class="w-full lg:w-4/4 p-4">
+                <h2 class="mb-2 text-l font-bold uppercase text-gray-600">
+                  Recent Maxium Balance was
+                  <span class="bg-red-100 text-xl px-1 text-gray-700"
+                    >{{ biggestbalance }} BTC</span
+                  >
+                  Almost
+                  <span class="bg-cyan-100 text-xl px-1 text-gray-700"
+                    >{{ lastseen }} </span
+                  >, Total Transactions
+                  <span class="bg-blue-100 text-xl px-1 text-gray-700">{{
+                    mytx
+                  }}</span
+                  >, Last Seen
 
-									<span class="bg-green-100 text-xl px-1 text-gray-700"
-										>{{ timeAgo(biggestbalancedate) }}
-									</span>
-								</h2>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+                  <span class="bg-green-100 text-xl px-1 text-gray-700"
+                    >{{ timeAgo(biggestbalancedate) }}
+                  </span>
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-	<BossmanCard :bossmans="bossmans" :myrank="myrank" :mybalance="mybalance" class="bg-yellow-200" />
+  <BossmanCard
+    :bossmans="bossmans"
+    :myrank="myrank"
+    :mybalance="mybalance"
+    class="bg-yellow-200"
+  />
 
-	<BalChart :mytxs="mytxs" />
+  <BalChart :mytxs="mytxs" />
 
-	<TxnTable :txns="mytxs" />
+  <TxnTable :txns="mytxs" />
 
-	<NotBar :btcaddress="btcaddress" class="bg-yellow-200" />
+  <NotBar :btcaddress="btcaddress" class="bg-yellow-200" />
 </template>
 
 <script setup>
-	import BossmanCard from '@/components/BossManCard.vue';
+import BossmanCard from "@/components/BossManCard.vue";
 
-	import BalChart from '@/components/BalChart.vue';
+import BalChart from "@/components/BalChart.vue";
 
-	import TopBar from '@/components/TopBar.vue';
+import TopBar from "@/components/TopBar.vue";
 
-	import NotBar from '@/components/NotBar.vue';
+import NotBar from "@/components/NotBar.vue";
 
-	import TxnTable from '@/components/TxnTable.vue';
+import TxnTable from "@/components/TxnTable.vue";
 
-	import {
-		axiosCall,
-		timeAgo,
-		getBossman,
-		findBalPos,
-		getBitcoinBalance,
-		calculatePercentile,
-		getBitcoinPrice,
-		getBitcoinNetwork,
-	} from '@/func.js';
+import {
+  axiosCall,
+  timeAgo,
+  getBossman,
+  findBalPos,
+  getBitcoinBalance,
+  calculatePercentile,
+  getBitcoinPrice,
+  getBitcoinNetwork,
+  getCoingecko,
+} from "@/func.js";
 
-	import { ref, onMounted } from 'vue';
+import { ref, onMounted } from "vue";
 
-	let addr = ref('');
+let addr = ref("");
 
-	const data = defineProps(['addr']);
+const data = defineProps(["addr"]);
 
-	let btcaddress = data.addr;
+let btcaddress = data.addr;
 
-	let mybalance = ref(0);
-	let myrank = ref(0);
-	let mytx = ref(0);
-	let mytxs = ref([]);
+let mybalance = ref(0);
+let myrank = ref(0);
+let mytx = ref(0);
+let mytxs = ref([]);
 
-	let lastseen = ref('');
+let lastseen = ref("");
 
-	let biggestbalance = ref(0);
-	let biggestbalancedate = ref(new Date());
+let biggestbalance = ref(0);
+let biggestbalancedate = ref(new Date());
 
-	let totalcount = ref(0);
-	let rankpostest = ref(0);
+let totalcount = ref(0);
+let rankpostest = ref(0);
 
-	let bossmans = ref([]);
-	let btcprice = ref(0);
+let bossmans = ref([]);
+let btcprice = ref(0);
 
-	const fetchData = async () => {
-		try {
-			const maindata = await getBitcoinNetwork();
+let coingeckoData = ref({
+  price: 0,
+  ath: 0,
+  athdate: "",
+});
 
-			totalcount.value = maindata.hodling_addresses;
+const fetchData = async () => {
+  try {
+    const maindata = await getBitcoinNetwork();
 
-			btcprice.value = await getBitcoinPrice();
+    totalcount.value = maindata.hodling_addresses;
 
-			const { bal, humanbal, tx, txs } = await getBitcoinBalance(btcaddress);
+    btcprice.value = await getBitcoinPrice();
 
-			if (tx > 0) {
-				lastseen.value = timeAgo(txs[0].confirmed);
+    const { bal, humanbal, tx, txs } = await getBitcoinBalance(btcaddress);
 
-				for (const tx of txs) {
-					mytxs.value.push({
-						tx: tx.tx_hash,
-						balance: tx.ref_balance,
-						date: tx.confirmed,
-						block: tx.block_height,
-						confirmations: tx.confirmations,
-					});
+    if (tx > 0) {
+      lastseen.value = timeAgo(txs[0].confirmed);
 
-					if (biggestbalance.value < tx.ref_balance) {
-						biggestbalance.value = tx.ref_balance;
-						biggestbalancedate.value = tx.confirmed;
-					}
-				}
-			}
+      for (const tx of txs) {
+        mytxs.value.push({
+          tx: tx.tx_hash,
+          balance: tx.ref_balance,
+          date: tx.confirmed,
+          block: tx.block_height,
+          confirmations: tx.confirmations,
+        });
 
-			biggestbalance.value = biggestbalance.value / 10 ** 8;
+        if (biggestbalance.value < tx.ref_balance) {
+          biggestbalance.value = tx.ref_balance;
+          biggestbalancedate.value = tx.confirmed;
+        }
+      }
+    }
 
-			mytx.value = tx;
+    biggestbalance.value = biggestbalance.value / 10 ** 8;
 
-			mybalance.value = humanbal;
+    mytx.value = tx;
 
-			myrank.value = await findBalPos(bal);
+    mybalance.value = humanbal;
 
-			if (myrank.value === 0) return;
+    myrank.value = await findBalPos(bal);
 
-			const bossmanx = await getBossman(bal + 1);
+    if (myrank.value === 0) return;
 
-			for (const address of bossmanx) {
-				const { bal, humanbal, txs } = await getBitcoinBalance(address);
-				const date = txs[0].confirmed;
-				bossmans.value.push({ address, bal, humanbal, date });
-			}
+    const bossmanx = await getBossman(bal + 1);
 
-			console.log(bossmans);
+    for (const address of bossmanx) {
+      const { bal, humanbal, txs } = await getBitcoinBalance(address);
+      const date = txs[0].confirmed;
+      bossmans.value.push({ address, bal, humanbal, date });
+    }
 
-			rankpostest.value = await calculatePercentile(myrank.value, totalcount.value);
-		} catch (error) {
-			console.error('Error fetching data:', error);
-		}
-	};
+    console.log(bossmans);
 
-	const fetchPrice = async () => {
-		btcprice.value = (await getBitcoinPrice()) || btcprice.value;
-	};
+    rankpostest.value = await calculatePercentile(
+      myrank.value,
+      totalcount.value
+    );
 
-	onMounted(fetchData);
+    const cg = await getCoingecko();
+    coingeckoData.value = {
+      price: cg.price,
+      ath: cg.ath,
+      athdate: cg.athdate,
+    };
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
 
-	setInterval(async () => {
-		fetchPrice();
-	}, 1000 * 11);
+const fetchPrice = async () => {
+  btcprice.value = (await getBitcoinPrice()) || btcprice.value;
+  cg.ath = await getCoingecko().ath;
+};
+
+onMounted(fetchData);
+
+setInterval(async () => {
+  fetchPrice();
+}, 1000 * 11);
 </script>
